@@ -1,1 +1,44 @@
 
+CommonJS 提出了一种用于同步或异步动态加载JavaScript代码的API规范，非常简单却很优雅，称之为AMD（Modules/AsynchronousDefinition）,规范本身非常简单，甚至只包含了一个API：
+
+define([module-name?], [array-of-dependencies?], [module-factory-or-object]);
+
+通过参数的排列组合，这个简单的API可以从容应对各种各样的应用场景，如下所述。
+
+匿名模块
+在这种场景下，无需输入模块名，即省略第一个参数，仅包含后两个参数：依赖模块的列表以及回调函数，例如一个简单的匿名模块可以用如下代码定义：
+define(["math"], function(math){ 
+  return { 
+    addTen: function(x){ 
+      return math.add(x, 10); 
+    } 
+  }; 
+}); 
+
+如例子中所示，如果模块名被省略不写，那么这是一个匿名模块。通过这种强大的方式，模块的源代码与它的标识可以做到不相关。我们可以轻松的对模块重命名或者将其移动到其他的路径而不需要改模块内的任何代码。这个技术遵循了基本的DRY（Don't Repeat Yourself）原则，避免了模块标识的多次存储（文件名/路径信息不会在代码中重复）。这不仅使得模块的开发变得更加容易，而且为模块的重用提供了极大的灵活性。
+
+数据封装：新的JSON-P
+对于一些仅仅提供数据或者独立方法（不依赖于其它模块的方法）的模块，可以简单的用如下方式来定义： 
+define({ 
+  name:"some data" 
+}); 
+这个和JSON-P非常像，但是却有一个显著的优点：它使得JSON-P数据可以现在静态文件中，而并不需要动态的回调过程。这也使得内容是可cache的，而且是CDN友好的。
+
+封装CommonJS模块
+define(["require", "exports", "math"], function(require, exports){ 
+// standard CommonJS module: 
+  var math = require("math"); 
+  exports.addTen = function(x){ 
+    return math.add(x, 10); 
+  }; 
+});  
+
+
+模块id，但没有模块依赖
+这种情况用于你想指定模块id，但是这个模块不依赖于其它模块。这时的参数默认是“require”，“exports”和“module”。从而我们可以这样创建adder模块。 
+通过这种方式定义的模块可以被RequireJS载入，也可以作为其它模块的依赖被载入，或者直接用require()的形式载入。
+define("adder", function(require, exports){ 
+  exports.addTen = function(x){ 
+      return x + 10; 
+  }; 
+}); 
