@@ -1,7 +1,11 @@
 
+AMD
+
 CommonJS 提出了一种用于同步或异步动态加载JavaScript代码的API规范，非常简单却很优雅，称之为AMD（Modules/AsynchronousDefinition）,规范本身非常简单，甚至只包含了一个API：
 
 define([module-name?], [array-of-dependencies?], [module-factory-or-object]);
+
+AMD就是这样一种对模块的定义，使模块和它的依赖可以被异步的加载，但又按照正确的顺序。
 
 通过参数的排列组合，这个简单的API可以从容应对各种各样的应用场景，如下所述。
 
@@ -42,3 +46,64 @@ define("adder", function(require, exports){
       return x + 10; 
   }; 
 }); 
+以上内容参考自：AMD终极揭秘 http://blog.csdn.net/dojotoolkit/article/details/7820321
+
+RequireJS
+
+<script src="lib/require.js" data-main="lib/enter"></script>
+
+enter对应enter.js文件
+
+data-main属性
+当你下载RequireJS之后，你要做的第一件事情就是理解RequireJS是怎么开始工作的。
+当RequireJS被加载的时候，它会使用data-main属性去搜寻一个脚本文件（enter.js requireJs假设所有的依赖都是脚本，那么当你声明一个脚本依赖的时候你不需要使用.js后缀。）。data-main需要给所有的脚本文件设置一个根路径。根据这个根路径，RequireJS将会去加载所有相关的模块。
+另外一种方式定义根路劲是使用配置函数，后面我们将会看到。
+
+配置函数
+
+如果你想改变RequireJS的默认配置来使用自己的配置，你可以使用require.configh函数。config函数需要传入一个可选参数对象，这个可选参数对象包括了许多的配置参数选项。下面是一些你可以使用的配置：
+baseUrl——用于加载模块的根路径。
+paths——用于映射不存在根路径下面的模块路径。
+shims——配置在脚本/模块外面并没有使用RequireJS的函数依赖并且初始化函数。假设underscore并没有使用  RequireJS定义，但是你还是想通过RequireJS来使用它，那么你就需要在配置中把它定义为一个shim。
+deps——加载依赖关系数组
+下面是使用配置的一个例子：
+require.config({
+    //By default load any module IDs from scripts/app
+    baseUrl: 'scripts/app',
+    //except, if the module ID starts with "lib"
+     paths: {
+        lib: '../lib'
+    },
+    // load backbone as a shim
+    shim: {
+        'backbone': {
+            //The underscore script dependency should be loaded before loading backbone.js
+            deps: ['underscore'],
+            // use the global 'Backbone' as the module name.
+            exports: 'Backbone'
+        }
+    }
+});
+在这个例子中把根路径设置为了scripts/app，由lib开始的每个模块都被配置在scripts/lib文件夹下面，backbone 加载的是一个shim依赖。
+
+
+用RequireJS定义模块
+define(["logger"], function(logger) {       
+        return {
+             firstName: “John",
+             lastName: “Black“,
+             sayHello: function () {
+                logger.log(‘hello’);
+             }
+        }
+    }
+);
+
+
+使用require函数
+
+在RequireJS中另外一个非常有用的函数是require函数。require函数用于加载模块依赖但并不会创建一个模块。例如：下面就是使用require定义了能够使用jQuery的一个函数。
+
+require(['jquery'], function ($) {
+    //jQuery was loaded and can be used now
+});
