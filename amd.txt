@@ -86,6 +86,31 @@ require.config({
 });
 在这个例子中把根路径设置为了scripts/app，由lib开始的每个模块都被配置在scripts/lib文件夹下面，backbone 加载的是一个shim依赖。
 
+当多个模块需要载入且模块在不同的目录，则有两种写法。一种是逐一指定路径。
+　　require.config({
+　　　　paths: {
+　　　　　　"jquery": "lib/jquery.min",
+　　　　　　"underscore": "lib/underscore.min",
+　　　　　　"backbone": "lib/backbone.min"
+　　　　}
+　　});
+另一种则是直接改变基目录（baseUrl）。
+　　require.config({
+　　　　baseUrl: "js/lib",
+　　　　paths: {
+　　　　　　"jquery": "jquery.min",
+　　　　　　"underscore": "underscore.min",
+　　　　　　"backbone": "backbone.min"
+　　　　}
+　　});
+
+如果某个模块在另一台主机上，也可以直接指定它的网址，比如：
+　　require.config({
+　　　　paths: {
+　　　　　　"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min"
+　　　　}
+　　});
+
 
 用RequireJS定义模块
 define(["logger"], function(logger) {       
@@ -107,3 +132,23 @@ define(["logger"], function(logger) {
 require(['jquery'], function ($) {
     //jQuery was loaded and can be used now
 });
+
+require.js插件
+require.js还提供一系列插件，实现一些特定的功能。
+domready插件，可以让回调函数在页面DOM结构加载完成后再运行。
+　　require(['domready!'], function (doc){
+　　　　// called once the DOM is ready
+　　});
+text和image插件，则是允许require.js加载文本和图片文件。
+　　define([
+　　　　'text!review.txt',
+　　　　'image!cat.jpg'
+　　　　],
+
+　　　　function(review,cat){
+　　　　　　console.log(review);
+　　　　　　document.body.appendChild(cat);
+　　　　}
+　　);
+
+类似的插件还有json和mdown，用于加载json文件和markdown文件。
