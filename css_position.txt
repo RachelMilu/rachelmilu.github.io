@@ -4,6 +4,9 @@ position: absolute
 当时回答错了，今天特来重新捋一捋。。。
 
 
+以下内容基本摘自 w3school http://www.w3school.com.cn/cssref/pr_class_position.asp
+
+
 首先，position 默认的值是static。
 绝对（absolute）或固定（fixed）定位元素会生成一个块级框，而不论该元素本身是什么类型。
 相对（relative）定位元素会相对于它在正常流中的默认位置偏移。
