@@ -1,16 +1,20 @@
 position: absolute
 之前有个哥们儿问我，position absolute 和relative分别是相对于啥定位的， 
-当时回答得不是很明确，今天特来重新捋一捋。。。
+由于自己之前也没仔细看过几个参数的定义和用法（没错啊我一直以来都是随便用用啊你想鄙视我我接受啊摊手），
+当时回答错了，今天特来重新捋一捋。。。
+
 
 首先，position 默认的值是static。
 绝对（absolute）或固定（fixed）定位元素会生成一个块级框，而不论该元素本身是什么类型。
 相对（relative）定位元素会相对于它在正常流中的默认位置偏移。
+
 
 absolute
 生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位,即选取其最近一个具有定位设置的父级对象进行绝对定位，
 如果对象的父级没有设置定位属性，absolute元素将以body坐标原点进行定位。
 元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
 而其层叠通过css z-index属性定义。此时对象不具有边距，但仍有补白和边框
+
 
 fixed	
 生成绝对定位的元素，相对于浏览器窗口进行定位，这里所固定的参照对像是可视窗口而并非是body或是父级元素。
@@ -22,7 +26,9 @@ relative
 生成相对定位的元素，相对于其正常位置进行定位。
 因此，"left:20" 会向元素的 LEFT 位置添加 20 像素。
 
+
 static	默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。
+
 
 inherit	规定应该从父元素继承 position 属性的值。
 
@@ -34,29 +40,6 @@ top, bottom, left, right
 对于相对定义元素，如果 top 和 bottom 都是 auto，其计算值则都是 0；
 如果其中之一为 auto，则取另一个值的相反数；如果二者都不是 auto，bottom 将取 top 值的相反数。
 
-
-demo:
-html
-<body>
-	<div id="parent">
-		<div id="child" class="child1">
-		</div>
-		<div id="child1" class="child2">
-		</div>
-	</div>
-</body>
-
-css
-.child1 {
-	position: absolute;
-	width: 400px;
-	height: 400px;
-	background: yellow;
-}
-.child2 {
-	position: absolute;
-	width: 400px;
-	height: 300px;
-	background: blue;
-	left: 20px;
-}
+最后，假如你想在浏览器试一下的话，记得设置了position的元素要同时设置left和top，这样看起来直观很多，我下午就只设置了left，然后在验证
+“绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位,即选取其最近一个具有定位设置的父级对象进行绝对定位”
+这句话的时候一直纠结top的位置不对。。。我没设置top它怎么会对呢。。。自己挖了个坑踩里面了，泪奔
