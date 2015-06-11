@@ -1,0 +1,57 @@
+以下内容主要摘抄自http://www.tuicool.com/articles/63uqAfI
+
+避免angular项目中内存泄露的三个黄金法则
+Three Golden Rules
+Rule 1: Understand the framework and lifecycle.
+Rule 2: Be careful at the interface between short and long lived objects.
+Rule 3: Disconnect the graph.
+
+1.在注册事件时产生了一个闭包， 由于事件一直没有解绑，闭包、闭包上下文一直没有被释放，因此scope一直被引用着，不会释放资源。
+function(scope, element, attrs) {  
+  element.on('click', function() {
+    scope.selected = true;
+  });
+}
+解决办法：
+function(scope, element, attrs) {  
+  element.on('click', function() {
+    scope.selected = true;
+  });
+  scope.$on('$destroy', function() {
+      element.off(); // deregister all event handlers
+  })''
+}
+
+2.angular的事件,跟上面差不多
+$scope.$on('someEvent', function() {
+    $scope.refresh();
+})
+解决办法：
+var cleanup = $scope.$on('someEvent', function() {  //angular的watcher事件会返回一个解绑事件
+    $scope.refresh();
+});
+$scope.$on('$destroy', function() {
+    cleanup();
+})
+
+3.Services里面的回调
+由于service是那种会长期存在的对象， 他也不应该在callback里引用任何的scope。
+UserService.onNameChange(function(newName) {  
+    $scope.userName = newName;
+});
+
+解决办法：
+3.1使用promise，promise是个短期对象
+// change and name and wait for the result
+UserService.changeName("Fry").then(function(newName) {  
+    $scope.name = newName;
+});
+
+3.2使用广播broadcasts
+// more like our original example
+$scope.$on('NotificationService:ChangeName', function(data) {
+    $scope.name = data;
+});
+
+
+more：Memory Management https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management
