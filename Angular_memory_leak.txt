@@ -58,5 +58,22 @@ $scope.$on('NotificationService:ChangeName', function(data) {
     $scope.name = data;
 });
 
+4.解除$timeout,$interval
 
+var timer = $timeout(updateTime, 1000);
+$scope.$on("$destroy",function( event ) {
+    $timeout.cancel( timer );
+});
+-------------------------------------------------------------
+var stopTime = $interval(updateTime, 1000);
+// to prevent updating time after the DOM element was removed.
+element.on('$destroy', function() {
+    $interval.cancel(stopTime);
+});
+
+其他：
+1.闭包上下文绑定后没有释放； 
+2.观察者模式在添加通知后，没有及时清理掉；
+3.定时器的处理函数没有及时释放，没有调用clearInterval方法； 
+4.视图层有些控件重复添加，没有移除。
 more：Memory Management https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management
