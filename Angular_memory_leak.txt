@@ -1,4 +1,9 @@
-以下内容主要摘抄自http://www.tuicool.com/articles/63uqAfI
+以下内容主要摘抄自
+http://www.dwmkerr.com/fixing-memory-leaks-in-angularjs-applications/?utm_source=tuicool
+Below content is mainly copyed from：
+http://www.dwmkerr.com/fixing-memory-leaks-in-angularjs-applications/?utm_source=tuicool
+
+JYE
 
 避免angular项目中内存泄露的三个黄金法则
 Three Golden Rules
