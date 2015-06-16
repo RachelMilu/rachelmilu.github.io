@@ -1,1 +1,74 @@
-http://blog.csdn.net/iefreer/article/details/24212161
+以下内容主要摘抄自：http://blog.csdn.net/iefreer/article/details/24212161
+相关文章书签： http://www.zhangxinxu.com/wordpress/2012/08/window-devicepixelratio/
+
+今天来捋一捋经常出现的“像素”，首先看概念：
+
+物理像素（physical pixel）或者叫设备像素：
+设备能控制显示的最小单位。
+
+显示分辨率：
+显示分辨率就是屏幕上显示的像素个数，分辨率160×128的意思是水平方向含有像素数为160个，垂直方向像素数128个。
+
+图像分辨率，通常指每英寸像素量（PPI，pixels per inch）：
+一英寸上可以并排的像素数量。
+正常人眼可以识别的分辨率为300PPI
+是单位英寸中所包含的像素点数
+
+设备独立像素（DIP，device-independent pixel，density-independent pixel）：
+独立于设备的用于逻辑上衡量像素的单位，如css里的px。
+
+设备像素比devicePixelRatio：
+物理像素与设备独立像素的比值，单位ppx（dots per pixel），表示每个DIP占用几个物理像素，
+也可以理解成CSS中的单位px在屏幕上占用了多少物理像素。
+它用于描述整个渲染环境在硬件设备上的缩放程度。
+在程序中可以通过window对象上的devicePixelRatio属性来得到这个值。
+它是只读的，但不是常量，对浏览器的一些特殊操作(如改变zoom的大小)会改变这个值。
+
+关系
+当设备屏幕ZOOM=100%的时候，浏览器CSS像素尺寸和设备像素相等；
+而当像素密度(pixel density)为1的时候，屏幕分辨率和设备像素相等。
+window.devicePixelRatio = 物理像素 / 设备独立像素
+
+响应式设计
+media query来探测屏幕尺寸，device-width以设备像素计算屏幕宽度。
+width以CSS像素计量总的页面宽度（在iPhone中，最小为980px）。
+viewport指的是浏览器通过宽度比例来计算元素尺寸的一块区域，通常比屏幕大一点。
+而如下meta标签，将使得viewport区域适配于设备像素宽度（在iPhone中，一般为320px）。
+<meta name="viewport" width="device-width">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
