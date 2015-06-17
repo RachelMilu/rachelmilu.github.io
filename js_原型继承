@@ -8,6 +8,7 @@ w3c http://www.w3school.com.cn/js/pro_js_inheritance_implementing.asp
 
 代码如下：
 //大多数JavaScript的实现用 __proto__ 属性来表示一个对象的原型链。
+//but, Object.getPrototypeOf 函数才是查看对象原型的推荐方法
 function getProperty(obj, prop) {
     if (obj.hasOwnProperty(prop))
         return obj[prop]
