@@ -7,3 +7,27 @@
 好处：
 提高性能
 新添加的元素还是会有之前的事件
+
+
+jquery的事件委托
+
+bind方法，
+$("#info_table td").live("click",function(){/*显示更多信息*/});
+不能给后来新加的元素绑方法
+
+live，
+$("#info_table td").live("click",function(){/*显示更多信息*/});
+能给新加的方法绑，但只能在jquery选择器后面用，不能在find（）后面用
+收集所有的元素并创建不必要的jQuery对象，
+事件绑在$(document)对象上
+
+delegate，
+$("#info_table").delegate("td","click",function(){/*显示更多信息*/});
+
+
+提示：
+使用事件委托时，如果注册到目标元素上的其他事件处理程序使用.stopPropagation()阻止了事件传播，那么事件委托就会失效。
+$(elems).on(events, selector, data, fn);
+$(elems).off(events, selector, fn);
+如果指定selector，则为事件委托；否则，就是常规绑定。
+$("#list").on("click", "li", function () {/*显示更多信息*/});
