@@ -1,0 +1,111 @@
+以下内容是关于原型继承相关帖子的解读和笔记，原帖在此：
+http://www.ituring.com.cn/article/56184
+
+原型继承的定义：
+“当查找一个对象的属性时，JavaScript 会向上遍历原型链，直到找到给定名称的属性为止。——出自JavaScript秘密花园”
+
+代码如下：
+//大多数JavaScript的实现用 __proto__ 属性来表示一个对象的原型链。
+function getProperty(obj, prop) {
+    if (obj.hasOwnProperty(prop))
+        return obj[prop]
+    else if (obj.__proto__ !== null)
+        return getProperty(obj.__proto__, prop)
+    else
+        return undefined
+}
+所以原型链的继承可以是这样：
+var Point = {
+    x: 0,
+    y: 0,
+    print: function () { console.log(this.x, this.y); }
+};
+
+var p = {x: 10, y: 20, __proto__: Point};
+p.print(); // 10 20
+
+但是，我们通常见到的展示继承的代码例子是这样：
+function Point(x, y) {
+    this.x = x;
+    this.y = y;
+}
+Point.prototype = {
+    print: function () { console.log(this.x, this.y); }
+};
+
+var p = new Point(10, 20);
+p.print(); // 10 20
+
+new 运算符：
+new 运算符接受一个函数 F 及其参数：new F(arguments...)。这一过程分为三步：
+
+创建类的实例。这步是把一个空的对象的 __proto__ 属性设置为 F.prototype 。
+初始化实例。函数 F 被传入参数并调用，关键字 this 被设定为该实例。
+返回实例。
+现在我们知道了 new 是怎么工作的，我们可以用JS代码实现一下：
+
+function New (f) {
+    var n = { '__proto__': f.prototype }; /*第一步*/
+    return function () {
+        f.apply(n, arguments);            /*第二步*/
+        return n;                         /*第三步*/
+    };
+}
+
+
+JavaScript中真正的原型继承（这里开始看不懂了。。。为神马要强调“真正的”原型继承？）
+
+大宗师 Douglas Crockford 发现的实现真正的原型继承的方式如下
+Object.create = function (parent) {
+    function F() {}
+    F.prototype = parent;
+    return new F();
+};
+也可以这样
+Object.create = function (parent) {
+    return { '__proto__': parent };
+};
+
+下面这段代码就是让我们的 Point 采用真正的原型继承：
+var Point = {
+    x: 0,
+    y: 0,
+    print: function () { console.log(this.x, this.y); }
+};
+
+var p = Object.create(Point);
+p.x = 10;
+p.y = 20;
+p.print(); // 10 20
+
+/////
+“为什么不推荐使用原型链 __proto__ 的写法？
+因为这样会对下游的子类开放对整个原型链的操作权限，也就是在子类中就可以对由上游父类产生的原型链进行修改，这一点是十分危险的。”
+
+var P = function(){};
+P.prototype.name = 'parent';
+var a = new P();
+a.name
+//"parent"
+var b = new P();
+undefined
+a.name = "ss"
+//"ss"
+b.name
+//"parent"
+P.prototype.name
+//"parent"
+a.__proto__ === P.prototype
+//true
+a.__proto__.name = 'child'
+//"child"
+a.name
+//"ss"
+P.prototype.name
+//"child"
+
+原型继承到底继承了神马？
+继承了构造方法和原型链，构造方法就是复制了父类的属性；
+继承原型链就是子类和父类公用原型链上的方法和属性。
+
+
