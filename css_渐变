@@ -1,0 +1,4 @@
+  /* background-image: linear-gradient(90deg, #84B9CB, #4994BC 100%, transparent 100%); */
+  background: -webkit-gradient(linear, 50% 50%, 100% 100%, from(#84B9CB), to(#4A95BE));
+  
+  参考文章http://www.w3cplus.com/content/css3-gradient
