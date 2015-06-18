@@ -1,0 +1,5 @@
+盒模型由内到外分别是 content padding content margin。
+正常的w3c标准的盒模型下，width和height是到内容部分。
+ie6-8的盒模型的width和height部分是包括content，padding，border。
+
+有一个css属性叫box－sizing，当他的值为border－box时，运用的就是ie的盒模型，值为content－box时，运用的就是w3c的标准盒模型。
