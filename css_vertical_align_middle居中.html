@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ru</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<style>
+body {
+	/*width: 960px;*/
+	height: 100%; 
+	margin: 0 auto; 
+	border: 1px solid #ddd; 
+	padding: 15px;
+}
+.outer {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	border: 1px solid #ddd; 
+}
+
+.static {
+	background: #ddd;
+
+}
+
+.responsive {
+	background: #F7F9FA;
+}
+
+section {
+	border: 1px #D0CECE solid;
+	margin: 30px;
+	clear: both;
+}
+
+.section1 .static,.section2 .static {
+	float: left;
+	width: 200px;
+}
+
+.section1 .responsive,.section2 .responsive {
+	margin-left: 210px;
+}
+.center {
+  height: 20px;
+  width: 200px;
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;/*高度的一半*/
+
+}
+.section2 .outer {
+	display: table;
+}
+
+.section2 .static{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
+</style>
+</head>
+<body>
+	<h1>css 垂直居中</h1>
+	<h2>1.单行文本垂直居中</h2>
+	<p>
+		vertical-align属性
+		它只对(X)HTML元素中拥有valign特性的元素才生效，例如表格元素中的td、th、caption等,
+		而像div、span这样的元素是没有valign特性的，因此使用vertical-align对它们不起作用。 
+	</p>
+	<p>
+		使用line-height,一般会用overflow:hidden来防止内容超出容器或者产生自动换行
+	</p>
+	<code>
+			div{ 
+		height:25px; 
+		line-height:25px; 
+		overflow:hidden; 
+		} 
+	</code>
+
+	<h2>2.多行文本垂直居中</h2>
+	<p>
+		通过display属性使div标签模拟table标签，即外部divdisplay为table，内部div的display为table-cell，vertical-align为middle
+	</p>
+	<p>
+		缺陷：内部div不能同时使用float属性，否则居中会失效。
+	</p>
+	
+
+	<section class="section1">
+		<h3>需要居中的内容高宽固定，像图片啥的</h3>
+		<div class="outer">
+			<div class="static">
+			<div class="center">需要居中的内容 高宽固定</div>
+			</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+
+	<section class="section2">
+		<h3>需要居中的内容高宽不定，像文本啥的</h3>
+		<div class="outer">
+			<div class="static">
+			<div>需要居中的文本段落 高宽不定</div>
+			</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+	
+	<p>
+		让我想想有没有别的法子。。。
+	</p>
+</body>
+</html>
+
