@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ru</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<style>
+body {
+	/*width: 960px; */
+	height: 100%; 
+	margin: 0 auto; 
+	border: 1px solid #ddd; 
+	padding: 15px;
+}
+.outer {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.static {
+	height: 150px;
+	background: #ddd;
+}
+
+.responsive {
+	background: #F7F9FA;
+}
+
+section {
+	border: 1px #D0CECE solid;
+	margin: 30px;
+	clear: both;
+}
+
+.section1 .static {
+	float: left;
+	width: 200px;
+}
+
+.section1 .responsive {
+	margin-left: 210px;
+}
+
+.section2 .static {
+	float: right;
+	width: 200px;
+}
+
+.section2 .responsive {
+	margin-right: 210px;
+}
+
+.section3 .static {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200px;
+	background: #dddl;
+}
+
+.section3 .responsive {
+	margin-left: 210px;
+}
+
+.section4 .static {
+	float: left;
+	width: 200px;
+}
+
+.section4 .responsive {
+	margin-right: 210px;
+}
+
+.section4 .responsive-outer {
+	float: right;
+	width: 100%;
+	margin-right: -210px;
+}
+
+.section5 .outer {
+	display: table;
+}
+
+.section5 .static {
+	display: table-cell;
+	width: 200px;
+}
+
+.section5 .responsive {
+	display: table-cell;
+}
+</style>
+</head>
+<body>
+	<h1>实现右边固定宽度，左边自适应（或者反过来）的方法</h1>
+	<h2>1.固定宽度区浮动，自适应区不设宽度而设置 margin</h2>
+	<p>div有个默认属性，即如果不设置宽度，那他会自动填满他的父标签的宽度。</p>
+	<p>然而，在dom结构中，固定宽度的div必须在自适应的文字的div的前面。</p>
+	<section class="section1">
+		<h3>左边固定 右边自适应</h3>
+		<div class="outer">
+			<div class="static">固定的文字</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+	<section class="section2">
+		<h3>右边固定 左边自适应</h3>
+		<div class="outer">
+			<div class="static">固定的文字</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+
+	<h2>2.固定宽度区使用绝对定位，自适应区照例设置margin</h2>
+	<p>缺陷：这样子外部容器的高度与固定文字的高度无关，也就是没有被撑大，因外他们不在一个文档流里面。</p>
+	<p></p>
+	<section class="section3">
+		<h3>左边固定 右边自适应</h3>
+		<div class="outer">
+			<div class="static">固定的文字</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+
+	<h2>3.再加一层dom结构</h2>
+	<p>再包一个div</p>
+	<p></p>
+	<section class="section4">
+		<h3>左边固定 右边自适应</h3>
+		<div class="outer">
+			<div class="responsive-outer">
+				<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+					文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+					文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+					文字。。。。文字 文字 文字。。。。</div>
+			</div>
+			<div class="static">固定的文字</div>
+		</div>
+	</section>
+
+	<h2>4.display:table</h2>
+	<p>这是标准浏览器的写法,也需要dom按从左到右的顺序来。margin会失效。</p>
+	<p></p>
+	<section class="section5">
+		<h3>左边固定 右边自适应</h3>
+		<div class="outer">
+			<div class="static">固定的文字</div>
+			<div class="responsive">自适应文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字
+				文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字 文字。。。。文字 文字
+				文字。。。。</div>
+		</div>
+	</section>
+	
+	<p>
+		参考文章：<a href="http://jo2.org/css-auto-adapt-width/">http://jo2.org/css-auto-adapt-width/</a>
+	</p>
+</body>
+</html>
+
