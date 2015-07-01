@@ -1,0 +1,9 @@
+深拷贝的实现
+
+1.
+var cloneObj = JSON.parse(JSON.stringify(obj));
+这种办法需要考虑浏览器对JSON的支持；
+这会抛弃对象的constructor，也就是深复制之后，无论这个对象原本的构造函数是什么，在深复制之后都会变成Object；
+诸如RegExp对象是无法通过这种方式深复制的。
+
+2.
