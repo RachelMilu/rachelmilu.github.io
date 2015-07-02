@@ -7,3 +7,77 @@ var cloneObj = JSON.parse(JSON.stringify(obj));
 诸如RegExp对象是无法通过这种方式深复制的。
 
 2.
+数组的拷贝
+slice(开始下标，长度)
+contact(新的数组)
+
+然并卵，一旦数组里面保存的是引用类型，这些对象们的引用还是同一个。。。
+（
+ECMAScript 有 5 种原始类型（primitive type），即 Undefined、Null、Boolean、Number 和 String。
+http://www.w3school.com.cn/js/pro_js_primitivetypes.asp
+
+引用类型：http://www.w3school.com.cn/js/pro_js_referencetypes.asp
+）
+
+so我们需要自己实现对象的深浅拷贝。。。
+于是我找到了这个帖子：
+http://segmentfault.com/a/1190000000501320
+接下来是对该帖子的摘抄和理解：
+原作者的深拷贝目标是：
+1.深拷贝过来的对象的属性一致；
+2.深拷贝后的对象可以使用定义在prototype上的函数。
+3.被拷贝的对象的可能的类型范围是Boolean, Number, Date, String, RegExp, Array 以及 Object（所有自定义的对象全都继承于Object）
+
+
+
+原作者直接把方法挂在Object/Array/Boolean/String/Number/Date/RegEXp的原型链上，
+因此所有的继承自Object/Array/Boolean/String/Number/Date/RegEXp的对象都可以使用.clone方法
+
+Object.prototype.clone = function () {
+    var Constructor = this.constructor;
+    var obj = new Constructor();
+    for (var attr in this) {
+        if (this.hasOwnProperty(attr)) {//判断对象是否有某个特定的属性
+            if (typeof(this[attr]) !== "function") {
+            /*typeof 运算符返回字符串如：undefined /boolean /number/string/function, 或者“object” for class or null*/
+                if (this[attr] === null) {
+                    obj[attr] = null;
+                }
+                else {
+                    obj[attr] = this[attr].clone();
+                }
+            }
+        }
+    }
+    return obj;
+};
+
+/* Method of Array*/
+Array.prototype.clone = function () {
+    var thisArr = this.valueOf();
+    var newArr = [];
+    for (var i=0; i<thisArr.length; i++) {
+        newArr.push(thisArr[i].clone());
+    }
+    return newArr;
+};
+
+/* Method of Boolean, Number, String*/
+/*valueOf方法，返回最适合该对象的原始值。对于许多对象，该方法返回的值都与 ToString() 的返回值相同。*/
+Boolean.prototype.clone = function() { return this.valueOf(); };
+Number.prototype.clone = function() { return this.valueOf(); };
+String.prototype.clone = function() { return this.valueOf(); };
+
+/* Method of Date*/
+Date.prototype.clone = function() { return new Date(this.valueOf()); };
+
+/* Method of RegExp*/
+RegExp.prototype.clone = function() {
+    var pattern = this.valueOf();
+    var flags = '';
+    flags += pattern.global ? 'g' : '';
+    flags += pattern.ignoreCase ? 'i' : '';
+    flags += pattern.multiline ? 'm' : '';
+    return new RegExp(pattern.source, flags);
+};
+
