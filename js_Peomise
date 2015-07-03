@@ -54,19 +54,14 @@ new Promise(step1).then(function(val){
 
 想找一找替代方案，就想到jquery的Deferred对象。
 
-    var deferred1 = jQuery.Deferred();
-		var promise1 = deferred1.promise();
-		
-		deferred1.resolve(1);
-		promise1.then(function(val){
-			console.log("then1,val=",val);
-			return jQuery.Deferred(step1);			
-		}).then(function(result){
-			console.log("promise2",result);
-			return jQuery.Deferred(step2);
-		}).then(function(result){
-			console.log("promise3",result);
-		})
+	jQuery.Deferred(step1)
+	.then(function(result){
+		console.log("promise2",result);
+		return jQuery.Deferred(step2);
+	})
+	.then(function(result){
+		console.log("promise3",result);
+	})
 
 发现这样做就可以做到跟上面那样使用Promise对像一样的效果。。。
 
