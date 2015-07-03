@@ -1,0 +1,76 @@
+项目中一堆call ajax的地方，于是来捋一捋Promise对象。
+
+参考的好帖子有：
+http://segmentfault.com/a/1190000002395343
+http://www.w3ctech.com/topic/721
+重点摘抄：
+
+var val = 1;
+
+function step1(resolve, reject) {
+    console.log('步骤一：执行');
+    if (val >= 1) {
+        resolve('Hello I am No.1');
+    } else if (val === 0) {
+        reject(val);
+    }
+}
+
+function step2(resolve, reject) {
+    console.log('步骤二：执行');
+    if (val === 1) {
+        resolve('Hello I am No.2');
+    } else if (val === 0) {
+        reject(val);
+    }
+}
+
+function step3(resolve, reject) {
+    console.log('步骤三：执行');
+    if (val === 1) {
+        resolve('Hello I am No.3');
+    } else if (val === 0) {
+        reject(val);
+    }
+}
+
+new Promise(step1).then(function(val){
+    console.info(val);
+    return new Promise(step2);
+}).then(function(val){
+    console.info(val);
+    return new Promise(step3);
+}).then(function(val){
+    console.info(val);
+    return val;
+}).then(function(val){
+    console.info(val);
+    return val;
+});
+
+简洁明了有木有，但是。。。
+
+由于项目的背景是移动端和pc段都做，所以要兼容的浏览器非常多。据说Promise对象是现代浏览器支持的，果然在ie8上妥妥地跪了。
+
+想找一找替代方案，就想到jquery的Deferred对象。
+
+    var deferred1 = jQuery.Deferred();
+		var promise1 = deferred1.promise();
+		
+		deferred1.resolve(1);
+		promise1.then(function(val){
+			console.log("then1,val=",val);
+			return jQuery.Deferred(step1);			
+		}).then(function(result){
+			console.log("promise2",result);
+			return jQuery.Deferred(step2);
+		}).then(function(result){
+			console.log("promise3",result);
+		})
+
+发现这样做就可以做到跟上面那样使用Promise对像一样的效果。。。
+
+可能有什么副作用也说不定。。。再研究哈~
+
+
+
