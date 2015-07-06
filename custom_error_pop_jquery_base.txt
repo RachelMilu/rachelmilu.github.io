@@ -1,0 +1,42 @@
+function showError(){
+	var errorList = $(".myError");
+	if(errorList.length < 1){
+		$("<div class='myError'><div class='text-container'><span class='text'>error!</span></div></div>").appendTo("body"); 
+	}
+}
+
+function hideError(){
+	 $(".myError").remove();
+}
+
+
+css:
+.myError {
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, .5);
+	z-index: 10000;
+	position: fixed;
+	top: 0;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	.text-container {
+		text-align: center;
+		color: #666;
+		border-radius: 4px;
+		width: 80%;
+		border-radius: 3px;
+		background: #131313;
+		opacity: .8;
+		font-size: 15px;
+		text-align: center;
+		padding: 10px;
+		.text {
+		}
+	}
+}
+
+todo: animation
