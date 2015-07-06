@@ -1,0 +1,15 @@
+
+线性渐变
+
+线性渐变：
+  新式语法 
+  background: -webkit-linear-gradient(-45deg,#FAFCFC,#0D0D0D);
+  or
+  -webkit-linear-gradient(left top,#FAFCFC,#0D0D0D);
+  
+  老式语法 
+  background: -webkit-gradient(linear, left top, right bottom, from(#F9FCFD), to(#060606));
+  or
+  background: -webkit-gradient(linear, 0 0, 100% 100%, from(#F9FCFD), to(#060606));
+  
+除了background-image属性，渐变还可以用在list-style-type，border-image属性上。
