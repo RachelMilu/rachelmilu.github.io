@@ -71,5 +71,12 @@ new Promise(step1).then(function(val){
 http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
 里面贴的代码甚是精妙，作者也提到啦不要用deferred，但是他貌似木有讲清楚为啥。。。
+倒是给了个promise反模式用法的链接：
+https://github.com/petkaantonov/bluebird/wiki/Promise-anti-patterns#the-deferred-anti-pattern
+
+最后附上
+es6 promise的实现：https://github.com/calvinmetcalf/lie
+
+
 
 
