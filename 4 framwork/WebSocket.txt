@@ -1,3 +1,10 @@
+这两天要考虑实现一个实时通讯的chat功能，就看了一堆前辈们的帖子，了解一下websocket及其相关。
+主要参考的原文有：
+[网页设计]Ajax、Comet与Websocket http://www.shaoqun.com/a/54588.aspx
+认识HTML5的WebSocket http://www.cnblogs.com/wei2yi/archive/2011/03/23/1992830.html
+html5利用websocket完成的推送功能 http://www.alixixi.com/web/a/2014032492868.shtml
+
+
 WebSocket protocol
 实现即时通讯的三种方法：
 
@@ -6,11 +13,75 @@ WebSocket protocol
 浏览器需要不断的向服务器发出请求，然而HTTP request 的header是非常长的，里面包含的有用数据可能只是一个很小的值，这样会占用很多的带宽。
 
 2.Comet with AJAX。但这种技术虽然可达到全双工通信，但依然需要发出请求。
+    客户端与服务器端保持一个长连接，只有客户端需要的数据更新时，服务器才主动将数据推送给客户端。
+    Comet的实现主要有两种方式：
+        2.1基于Ajax的长轮询（long-polling）方式
+        浏览器在收到数据后会直接调用JS回调函数，但是这种方式该如何响应数据呢？可以通过在返回数据中嵌入JS脚本的方式，如“<script type="text/javascript">js_func(“data from server ”)</script>”，服务器端将返回的数据作为回调函数的参数，浏览器在收到数据后就会执行这段JS脚本。
+        
+        2.2基于 Iframe 及 htmlfile 的流（http streaming）方式
+        Iframe是html标记，这个标记的src属性会保持对指定服务器的长连接请求，服务器端则可以不停地返回数据，相对于第一种方式，这种方式跟传统的服务器推则更接近
+
+“Comet---一种hack技术
+以即时通信为代表的web应用程序对数据的Low Latency要求，传统的基于轮询的方式已经无法满足，而且也会带来不好的用户体验。于是一种基于http长连接的“服务器推”技术便被hack出来。这种技术被命名为Comet，这个术语由Dojo Toolkit 的项目主管Alex Russell在博文Comet: Low Latency Data for the Browser首次提出，并沿用下来。
+其实，服务器推很早就存在了，在经典的client/server模型中有广泛使用，只是浏览器太懒了，并没有对这种技术提供很好的支持。但是Ajax的出现使这种技术在浏览器上实现成为可能， google的gmail和gtalk的整合首先使用了这种技术。随着一些关键问题的解决（比如 IE 的加载显示问题），很快这种技术得到了认可，目前已经有很多成熟的开源Comet框架。
+以下是典型的Ajax和Comet数据传输方式的对比，区别简单明了。典型的Ajax通信方式也是http协议的经典使用方式，要想取得数据，必须首先发送请求。在Low Latency要求比较高的web应用中，只能增加服务器请求的频率。Comet则不同，客户端与服务器端保持一个长连接，只有客户端需要的数据更新时，服务器才主动将数据推送给客户端。”
 
 3.WebSocket API
-浏览器和服务器只需要要做一个握手的动作，他们之间就形成了一条快速通道，服务器和客户端可以在给定的时间范围内的任意时刻，相互推送信息。
+在新一代html标准html5中提供了一种浏览器和服务器间进行全双工通讯（又称为双向同时通信，即通信的双方可以同时发送和接收信息的信息交互方式）的网络技术Websocket。从Websocket草案得知，Websocket是一个全新的、独立的协议，基于TCP协议，与http协议兼容、却不会融入http协议，仅仅作为html5的一部分。于是乎脚本又被赋予了另一种能力：发起websocket请求。这种方式我们应该很熟悉，因为Ajax就是这么做的，所不同的是，Ajax发起的是http请求而已。 
+
+与http协议不同的请求/响应模式不同，Websocket在建立连接之前有一个Handshake（Opening Handshake）过程，在关闭连接前也有一个Handshake（Closing Handshake）过程，建立连接之后，双方即可双向通信。
+
+浏览器和服务器只需要要做一个握手的动作，他们之间就形成了一条快速通道，服务器和客户端可以在给定的时间范围内的任意时刻，相互推送信息。（这段话如此眼熟。。。看上面的comet。。。）
+
 在此WebSocket 协议中，为我们实现即时服务带来了两大好处：
 1. Header。互相沟通的Header是很小的-大概只有 2 Bytes
 2. Server Push。服务端可以主动向客户端发送推送。
 3. WebSocket允许跨域通信
+
+如何使用websocket：
+
+客户端
+在支持WebSocket的浏览器中，在创建socket之后。可以通过onopen，onmessage，onclose即onerror四个事件实现对socket进行响应
+一个简单示例
+/*
+申请一个WebSocket对象，参数是需要连接的服务器端的地址，
+同http协议使用http://开头一样，WebSocket协议的URL使用ws://开头，另外安全的WebSocket协议使用wss://开头。
+*/
+var ws = new WebSocket(“ws://localhost:8080”);
+
+/*用于将消息发送到服务端*/
+ws.send(“hello”);
+
+/*当websocket创建成功时，即会触发onopen事件*/
+ws.onopen = function()
+{
+  console.log(“open”);
+  ws.send(“hello”);
+};
+
+/*
+当客户端收到服务端发来的消息时，会触发onmessage事件，参数evt.data中包含server传输过来的数据
+*/
+ws.onmessage = function(evt)
+{
+  console.log(evt.data)
+};
+
+/*当客户端收到服务端发送的关闭连接的请求时，触发onclose事件*/
+ws.onclose = function(evt)
+{
+  console.log(“WebSocketClosed!”);
+};
+
+/*如果出现连接，处理，接收，发送数据失败的时候就会触发onerror事件*/
+ws.onerror = function(evt)
+{
+  console.log(“WebSocketError!”);
+};
+
+我们可以看出所有的操作都是采用事件的方式触发的，这样就不会阻塞UI，使得UI有更快的响应时间，得到更好的用户体验。
+
+服务器端：
+等我先驱把工程搭一搭。。。
+
 
