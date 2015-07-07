@@ -43,9 +43,6 @@ new Promise(step1).then(function(val){
 }).then(function(val){
     console.info(val);
     return val;
-}).then(function(val){
-    console.info(val);
-    return val;
 });
 
 简洁明了有木有，但是。。。
@@ -67,5 +64,12 @@ new Promise(step1).then(function(val){
 
 可能有什么副作用也说不定。。。再研究哈~
 
+
+----------我是update的分割线一号----------
+
+看了一片翻译来的帖子，称得上时promise大全啦，原帖在此：
+http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+里面贴的代码甚是精妙，作者也提到啦不要用deferred，但是他貌似木有讲清楚为啥。。。
 
 
