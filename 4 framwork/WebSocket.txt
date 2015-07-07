@@ -82,6 +82,9 @@ ws.onerror = function(evt)
 我们可以看出所有的操作都是采用事件的方式触发的，这样就不会阻塞UI，使得UI有更快的响应时间，得到更好的用户体验。
 
 服务器端：
-等我先驱把工程搭一搭。。。
+上面的帖子教的是一个java的服务端写法，等我先去把工程搭一搭。。。
+
+其他：
+nodejs＋socket.io  的一个帖子：http://blog.fens.me/nodejs-socketio-chat/
 
 
