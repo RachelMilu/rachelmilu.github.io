@@ -69,6 +69,8 @@ convert(9s, "ms");//convert(14cm, mm) 这是换算，并不是截取字符串重
         时间： s and ms,
         角度： rad, deg, grad and turn.
 default()//只在条件语句中有效，当没有其他mixin符合时返回true，否则为false
+default()//只在条件语句中有效，当没有其他mixin符合时返回true，否则为false
+default()//只在条件语句中有效，当没有其他mixin符合时返回true，否则为false
 
         栗子1...................
         
@@ -107,72 +109,38 @@ default()//只在条件语句中有效，当没有其他mixin符合时返回true
         .mixin() when (default()) {}//没有其他mixin符合时走这条
         .mixin() when not(default()) {} //有其他mixin符合时走这条
 
-下面的还没开始看。。。。。
 
+        div {
+          .m(@x) when (default()), not(default())    {always: @x}//这条一直会走（所以是或的关系？）
+          .m(@x) when (default()) and not(default()) {never:  @x}//这条永远不走（所以是且的关系？）
+          .m(1); // OK
+        }
+        
+        下面这样会报错，这个栗子无法确定每个default() 的true、false，因为他俩的值依赖于对方的值：
+        “ it is impossible to determine what value each default() call should return since they recursively depend on each other.”
+        div {
+          .m(@x) when (default())    {}
+          .m(@x) when not(default()) {}
+        
+          .m(1); // Error
+        }
 
-It is allowed to make multiple default() calls in the same guard condition or in a different conditions of a mixins with the same name:
+5.unit
 
-div {
-  .m(@x) when (default()), not(default())    {always: @x}
-  .m(@x) when (default()) and not(default()) {never:  @x}
+删除或更换单位。
+栗子1： unit(5, px)//5px
+栗子2： unit(5em)// 5
 
-  .m(1); // OK
-}
-However Less will throw a error if it detects a potential conflict between multiple mixin definitions using default():
+6.e
 
-div {
-  .m(@x) when (default())    {}
-  .m(@x) when not(default()) {}
-
-  .m(1); // Error
-}
-In above example it is impossible to determine what value each default() call should return since they recursively depend on each other.
-
-Advanced multiple default() usage:
-
-.x {
-  .m(red)                                    {case-1: darkred}
-  .m(blue)                                   {case-2: darkblue}
-  .m(@x) when (iscolor(@x)) and (default())  {default-color: @x}
-  .m('foo')                                  {case-1: I am 'foo'}
-  .m('bar')                                  {case-2: I am 'bar'}
-  .m(@x) when (isstring(@x)) and (default()) {default-string: and I am the default}
-
-  &-blue  {.m(blue)}
-  &-green {.m(green)}
-  &-foo   {.m('foo')}
-  &-baz   {.m('baz')}
-}
-输出：
-
-.x-blue {
-  case-2: #00008b;
-}
-.x-green {
-  default-color: #008000;
-}
-.x-foo {
-  case-1: I am 'foo';
-}
-.x-baz {
-  default-string: and I am the default;
-}
-The default function is available as a Less built-in function only inside guard expressions. If used outside of a mixin guard condition it is interpreted as a regular CSS value:
+用于对 CSS 的转义，已经由 ~"value" 语法代替。
+它接受一个字符串作为参数，并原样返回内容，不含引号。它可用于输出一些不合法的 CSS 语法，或者是使用 LESS 不能识别的属性。
 
 案例：
+filter: e("ms:alwaysHasItsOwnSyntax.For.Stuff()");//filter: ms:alwaysHasItsOwnSyntax.For.Stuff();
+注意：也接受经 ~"" 转义的值或者是数字作为参数。任何其它的值将产生错误。
 
-div {
-  foo: default();
-  bar: default(42);
-}
-输出：
-
-div {
-  foo: default();
-  bar: default(42);
-}
-unit
-
+待续
 
 
 
