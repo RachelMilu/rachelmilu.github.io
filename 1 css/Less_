@@ -1,0 +1,197 @@
+1.变量
+@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111;
+#header {
+  color: @light-blue;
+}
+
+2.混合（Mixin）
+.bordered {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+}
+.post a {
+  color: red;
+  .bordered;
+}
+
+3.嵌套规则
+#header {
+  color: black;
+}
+#header .navigation {
+  font-size: 12px;
+}
+等价于css的
+#header {
+  color: black;
+  .navigation {
+    font-size: 12px;
+  }
+}
+
+.clearfix {
+  display: block;
+  &:after {//& represents the current selector parent
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+4.运算
+任何数字、颜色或者变量都可以参与运算。Less 将会使用出现的单位
+@base: 5%;
+@filler: @base * 2;
+@other: @base + @filler;
+@var: 1px + 5;//6px
+
+color: #888 / 4;
+background-color: @base-color + #111;
+height: 100% / 2 + @filler;
+
+5.函数
+
+Less 内置了多种函数用于转换颜色、处理字符串、算术运算等。
+@base: #f04615;
+@width: 0.5;
+
+.class {
+  width: percentage(@width); // returns `50%`
+  color: saturate(@base, 5%);//将颜色饱和度增加 5%
+  background-color: spin(lighten(@base, 25%), 8);//颜色亮度降低 25% 并且色相值增加 8
+}
+
+Less内置函数：
+color("#aaa");//将代表颜色的字符串转换为颜色值
+convert(9s, "ms");//convert(14cm, mm) 这是换算，并不是截取字符串重新拼接
+        兼容的单位是:
+        长度： m, cm, mm, in, pt and pc,
+        时间： s and ms,
+        角度： rad, deg, grad and turn.
+default()//只在条件语句中有效，当没有其他mixin符合时返回true，否则为false
+
+        栗子1...................
+        
+        .mixin(1)                   {x: 11}
+        .mixin(2)                   {y: 22}
+        .mixin(@x) when (default()) {z: @x}//没有其他mixin符合时走这条
+        
+        div {
+          .mixin(3);//z:3
+        }
+        
+        div.special {
+          .mixin(1);//x: 11
+        }
+        
+        栗子2...................
+        .mixin(@value) when (ispixel(@value)) {width: @value}
+        .mixin(@value) when not(default())    {padding: (@value / 5)}
+        
+        div-1 {
+          .mixin(100px);//width: 100px;padding: 20px;
+        }
+        
+        div-2 {
+          /* ... */
+          .mixin(100%);//没有。。。
+        }
+        ----------------------------------
+        重要的事情说三遍：
+        .mixin() when (default()) {}//没有其他mixin符合时走这条
+        .mixin() when not(default()) {} //有其他mixin符合时走这条
+        
+        .mixin() when (default()) {}//没有其他mixin符合时走这条
+        .mixin() when not(default()) {} //有其他mixin符合时走这条
+        
+        .mixin() when (default()) {}//没有其他mixin符合时走这条
+        .mixin() when not(default()) {} //有其他mixin符合时走这条
+
+下面的还没开始看。。。。。
+
+
+It is allowed to make multiple default() calls in the same guard condition or in a different conditions of a mixins with the same name:
+
+div {
+  .m(@x) when (default()), not(default())    {always: @x}
+  .m(@x) when (default()) and not(default()) {never:  @x}
+
+  .m(1); // OK
+}
+However Less will throw a error if it detects a potential conflict between multiple mixin definitions using default():
+
+div {
+  .m(@x) when (default())    {}
+  .m(@x) when not(default()) {}
+
+  .m(1); // Error
+}
+In above example it is impossible to determine what value each default() call should return since they recursively depend on each other.
+
+Advanced multiple default() usage:
+
+.x {
+  .m(red)                                    {case-1: darkred}
+  .m(blue)                                   {case-2: darkblue}
+  .m(@x) when (iscolor(@x)) and (default())  {default-color: @x}
+  .m('foo')                                  {case-1: I am 'foo'}
+  .m('bar')                                  {case-2: I am 'bar'}
+  .m(@x) when (isstring(@x)) and (default()) {default-string: and I am the default}
+
+  &-blue  {.m(blue)}
+  &-green {.m(green)}
+  &-foo   {.m('foo')}
+  &-baz   {.m('baz')}
+}
+输出：
+
+.x-blue {
+  case-2: #00008b;
+}
+.x-green {
+  default-color: #008000;
+}
+.x-foo {
+  case-1: I am 'foo';
+}
+.x-baz {
+  default-string: and I am the default;
+}
+The default function is available as a Less built-in function only inside guard expressions. If used outside of a mixin guard condition it is interpreted as a regular CSS value:
+
+案例：
+
+div {
+  foo: default();
+  bar: default(42);
+}
+输出：
+
+div {
+  foo: default();
+  bar: default(42);
+}
+unit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
