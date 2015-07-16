@@ -7,3 +7,6 @@ input[type=file]:focus, input[type=radio]:focus, input[type=checkbox]:focus {
 	outline-style: none;/*bug fix of the outline box in chrome webview*/
 }
 
+HR APP
+BACKGROUND URL包含中文时：
+decodeURI(encodeURI(url));
