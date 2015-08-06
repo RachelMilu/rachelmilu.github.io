@@ -1,0 +1,12 @@
+function uppercaseFirstLetter(str){
+	var array = str.split(" ");
+	var rs = "";
+	for(var i=0; i<array.length;i++){
+		array[i] = array[i].substr(0,1).toUpperCase() + array[i].substr(1).toLowerCase();
+	}
+	rs = array.join(" ");
+	return rs;
+}
+
+
+
