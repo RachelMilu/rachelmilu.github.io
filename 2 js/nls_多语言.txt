@@ -1,0 +1,41 @@
+function substitute2(str) {
+	    return str.replace(/\{(.+?)\}/g,function($0, key) {
+	        return i18n[key]
+	    });
+	};
+	
+	function setNls(resolve){
+		if(!window.i18n){
+			window.i18n = {};
+		}
+		require( [ "../lib/nls/index_en" ], function(self) {
+			iData.add("i18n",self);
+			i18n =iData.get("i18n");
+			resolve.resolve(i18n);
+		});
+	}
+	
+	function replaceAll(eles){
+		var eleArray = Array.prototype.slice.call(eles);
+		eleArray.forEach(function(self){
+			if($(self).children().length > 0){
+				replaceAll($(self).children());
+			}else{
+				var a = $(self).text();
+				var b = substitute2(a);
+				$(self).text(b)
+			}
+		});
+	}
+	
+
+	
+	
+	$(document).ready(function() {
+		jQuery.Deferred(setNls)
+		.then(function(){
+			var eles = $("div:contains('{'),span:contains('{'),p:contains('{')");
+			replaceAll(eles);
+			
+		});
+	}
