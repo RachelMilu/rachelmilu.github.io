@@ -1,0 +1,5 @@
+var substitute = function(str, sub) {
+    return str.replace(/\{(.+?)\}/g,function($0, $1) {
+        return $1 in sub ? sub[$1] : $0;
+    });
+};
