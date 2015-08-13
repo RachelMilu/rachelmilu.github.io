@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Employee Documents Certificate List</title>
+<meta name="description" content="">
+<!-- 		<meta name="viewport" content="width=device-width; initial-scale=1.0"> -->
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- public including -->
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/animsition.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
+<!-- single page including -->
+<!-- 		<link rel="stylesheet" type="text/css" href="../css/employee_documents_list.css" /> -->
+<link rel="stylesheet/less" type="text/css"	href="../css/leave_management_summary.less" />
+<script src="../js/lib/less.min.js"></script>
+<style>
+.leave_management_summary .main-container {
+  position: relative;
+  overflow: hidden;
+}
+.chart_bg {
+  position: absolute;
+  top: 0;
+  background: #22262F;
+  color: #505B6F;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.date_item {
+  border-bottom: solid 1px #373D49;
+  height: 75px;
+  position: relative;
+}
+.date_item span {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+}
+.month {
+  justify-content: space-between;
+  display: flex;
+}
+.histogram .histogram_item.toTop {
+  transition: height 1s linear 0s;
+}
+.histogram .histogram_item {
+  position: absolute;
+  bottom: 0;
+  width: 30%;
+  height: 0;
+}
+.histogram .histogram_item .desc {
+  position: absolute;
+  top: -30px;
+  width: 150%;
+  margin-left: -25%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #7E8F9C;
+}
+.histogram .histogram_item:first-child {
+  background: #89C446;
+  margin-left: 14%;
+  background-color: #89c446;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0 #bbe090), color-stop(50% #89c446));
+  background-image: -webkit-linear-gradient(top, #bbe090 0, #89c446 50%);
+  background-image: -moz-linear-gradient(top, #bbe090 0, #89c446 50%);
+  background-image: -ms-linear-gradient(top, #bbe090 0, #89c446 50%);
+  background-image: -o-linear-gradient(top, #bbe090 0, #89c446 50%);
+  background-image: linear-gradient(top, #bbe090 0, #89c446 50%);
+}
+.histogram .histogram_item:last-child {
+  background: #0088DC;
+  margin-left: 56%;
+  background-color: #0088dc;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0 #63cdff), color-stop(50% #0088dc));
+  background-image: -webkit-linear-gradient(top, #63cdff 0, #0088dc 50%);
+  background-image: -moz-linear-gradient(top, #63cdff 0, #0088dc 50%);
+  background-image: -ms-linear-gradient(top, #63cdff 0, #0088dc 50%);
+  background-image: -o-linear-gradient(top, #63cdff 0, #0088dc 50%);
+  background-image: linear-gradient(top, #63cdff 0, #0088dc 50%);
+}
+#lineChartCanvasBuffer {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+}
+#lineChartCanvas {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+#histogram {
+  margin-top: 40px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+.item_annual_summary,
+.item_sick_summary {
+  color: #fff;
+  text-align: center;
+}
+.item_annual_summary .left_num,
+.item_sick_summary .left_num {
+  font-size: 30px;
+}
+.item_annual_summary .left,
+.item_sick_summary .left {
+  line-height: 12px;
+}
+
+</style>
+</head>
+<body class="animsition">
+	<!-- public including -->
+	<script src="../js/lib/jquery.min.js"></script>
+	<!-- animation plugin-->
+	<script src="../js/lib/jquery.animsition.min.js"></script>
+	<script src="../js/lib/bootstrap.min.js"></script>
+	<!-- common tools including -->
+	<script src="../js/common.js"></script>
+	<script src="../js/wchart.js"></script>
+	<script src="../js/Chart.js"></script>
+	<script src="../js/hrUtil.js"></script>
+	<!-- single page including -->
+	<script>
+	(function($) {
+
+	$(document).ready(function() {
+		initPageSettings();
+
+		jQuery.Deferred(getSummaryService).then(function(result) {
+			console.log("getSummaryService", result);
+			createCharts();
+		});
+		
+		bindEvent();
+		
+	});
+	function bindEvent(){
+		$(".header-a").on("click", function() {
+			hrUtil.sessionData("fade-in-right",false);
+			hrUtil.sessionData("cert_title", null);
+			hrUtil.sessionData("cert_type", null);
+			location.href = 'my_v2.html';
+		});
+	};
+	
+	function initPageSettings(){
+		var headerHeight = $(".header").height();
+		var contentHeight = window.innerHeight - headerHeight;
+		var chartHeight = (contentHeight - 40)/2;
+		$("#lineChartCanvas").css("height",chartHeight+"px");
+		$("#lineChartCanvasBuffer").css("height",chartHeight+"px");
+		$("#line_chart_bg").css("height",chartHeight+"px");
+		$("#histogram").css("height",chartHeight+"px");
+		$(".main-container").height(contentHeight);
+	}
+	function createCharts(){
+		var data = [
+					{
+						"type_id": 0,
+						"type_desc":"Annual Leave",
+						"left" :"11",
+						"total": "11"
+							
+					},
+					{
+						"type_id": 1,
+						"type_desc":"Sick Leave",
+						"left":"1",
+						"total":"5"
+					}
+				];
+		setHistogram(data);
+		
+		var annualMax = Number(data[0].total);
+		if(annualMax > 30){//20/40...
+			setAndCreateLineChart(15);
+			return;
+		}
+		if(annualMax >20){//15/30
+			setAndCreateLineChart(10);
+			return;
+		}
+		if(annualMax >10){//10/20
+			setAndCreateLineChart(5);
+			return;
+		}else{//5/10
+			setAndCreateLineChart(5);
+			return;
+		}
+	}
+	function setHistogram(data){
+		var itemAnnualHeight = data[0].left/data[0].total * 100 + "%";
+		var itemSickHeight = data[1].left/data[1].total * 100 + "%";
+		$(".item_annual").css("height",itemAnnualHeight);
+		$(".item_sick").css("height",itemSickHeight);
+		$(".item_annual").addClass("toTop");
+		$(".item_sick").addClass("toTop");
+		$(".item_annual_summary").html("<div><span class='left_num'>"+data[0].left+"</span><span>/"+data[0].total+"</span></div><div  class='left'>left</div>");
+		$(".item_sick_summary").html("<div><span class='left_num'>"+data[1].left+"</span><span>/"+data[1].total+"</span></div><div  class='left'>left</div>");
+	}
+	function setAndCreateLineChart(num){
+		$(".line_2").html("<span>"+num*2+"days</span>");
+		$(".line_1").html("<span>"+num+"days</span>");
+		createLineChart(num);
+	}
+	function createLineChart(scaleStepWidth){
+		var ctx = $("#lineChartCanvasBuffer").get(0).getContext("2d");
+		var data = {
+				labels : [1,2,3,4,5,6,7,8,9,10,11,12],
+				datasets : [
+					{
+						fillColor : "rgba(137, 196, 70, 0.5)",
+						strokeColor : "#89C446",
+						pointColor : "#89C446",
+						pointStrokeColor : "#89C446",
+						data : [10,0,null,null,5,null,null,2,10,0,5,2]
+					},
+					{
+						fillColor : "rgba(0, 136, 220, 0.5)",
+						strokeColor : "#0088DC",
+						pointColor : "#0088DC",
+						pointStrokeColor : "#0088DC",
+						data :  [5,null,null,null,4,null,null,1,5,null,4,1]
+					}
+				]
+			};
+
+		var options = {
+				bezierCurve: false,
+				datasetFill: false,
+				animation  : false,
+				showScale: true,
+				scaleShowGridLines : false,//grid of content
+				datasetStroke : false,
+				scaleLineWidth :1,//width of x y zhou
+				scaleOverride : true,
+				scaleSteps :3,//TODO 2
+				scaleStepWidth : scaleStepWidth,//TODO 5/10/15/20
+				scaleStartValue : 0,
+				scaleLineColor : "rgba(255,255,255,0)",
+				scaleLineWidth : 1,
+				scaleShowLabels : true,
+				scaleGridLineWidth : 0,	
+				datasetStrokeWidth : 4,
+				scaleFontSize: 12,
+				scaleFontColor: "#505B6F"
+		}
+		
+		var myLineChart = new Chart(ctx).Line(data,options);
+		console.log(myLineChart)
+		setBg(myLineChart);
+		//visiobility in less 
+		animateDraw();
+		
+	};
+	function setBg(myLineChart){
+		var startPoint, endPoint,stepHeight,steps;
+		startPoint = myLineChart.scale.startPoint;
+		endPoint = myLineChart.scale.endPoint;
+		steps  = myLineChart.scale.steps;
+		stepHeight = (endPoint - startPoint)/steps;
+		
+		$(".date_item").css("height",stepHeight +'px');
+		$(".line_2").css("margin-top", startPoint+"px")
+	};
+	// add animation of lineChart Here
+	function animateDraw(){
+		var left = $(".canvas_container").innerWidth()/12;
+		var ctx = document.getElementById("lineChartCanvasBuffer").getContext("2d");
+			var canvas = document.getElementById("lineChartCanvas");
+		    canvas.width = ctx.canvas.width;
+		    canvas.height = ctx.canvas.height;
+		    var context = canvas.getContext("2d");
+		    this.x=0;
+		    this.intId=setInterval(_clock, 10, this);
+			function _clock(self){
+				if(self.x<canvas.width + 4){
+					self.x+=4;
+				}else{
+					clearInterval(self.intId);
+				}
+			    context.drawImage(document.getElementById("lineChartCanvasBuffer"), self.x + left+2 , 0, 4, canvas.height, self.x, 0, 4, canvas.height);
+			}
+	}
+	
+	function getSummaryService(resolve, reject) {
+
+		var certType = hrUtil.sessionData("cert_type");
+		var username =  hrUtil.sessionData("username");
+		var access_token = hrUtil.sessionData("access_token");
+		var userInfo={ cerType: certType, userName: username};
+		var dummyPath = "../dummy/leave_management_summary.json";
+		
+		var params = {
+			data : userInfo,
+			dummyPath : dummyPath,
+			url : "/ws/doc/getCertificate"
+		};
+
+		if (true) {//useDummy TODO
+			params.url = params.dummyPath;
+		} else {
+			params.url = prefix + params.url;
+		}
+		
+		showLoadingMask();
+		$.ajax({
+			type : 'GET',
+			data : params.data,
+			url : params.url,
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader('Authorization','bearer'+access_token);
+				console.log('test');
+			},
+			success : function(result) {
+				hideLoadingMask();
+				console.log("ajax succ callback", result);
+				resolve.resolve(result);
+			},
+			error : function(result) {
+				hideLoadingMask();
+				errorHandler(result,result.status);
+				console.log('error !!!!!!!!!!!');
+			}
+		});
+	}
+})(jQuery);
+
+	</script>
+
+	<div class="page page-with-header leave_management_summary">
+		<header class="header">
+			<div class="text-center">
+				<a class="header-a"><i class="fa fa-arrow-left back"></i></a>
+				<div class="header-text">
+					<span>SUMMARY</span>
+				</div>
+			</div>
+		</header>
+
+		<div class="main-container no-padding css-scroll">
+			<div class="canvas_container">
+				<canvas id="lineChartCanvas"> <p> you browser doesn't support the canvas feature</p> </canvas>
+				<canvas id="lineChartCanvasBuffer"> <p> you browser doesn't support the canvas feature</p> </canvas>
+<!-- 				<canvas id="histogramCanvas"> <p> you browser doesn't support the canvas feature</p> </canvas> -->
+			</div>
+			<div id="chart_bg" class="chart_bg">
+				<div id="line_chart_bg">
+					<div class="date_item line_2"><span>10days</span></div>
+					<div class="date_item line_1"><span>5days</span></div>
+					<div class="date_item "><span></span></div>
+<!-- 					<div id="month" class="month"></div> -->
+				</div>
+				
+				<div id="histogram" class="histogram">
+					<div class="histogram_item item_annual">
+						<span class="desc">Annual Leave (day)</span>
+						<div class="item_annual_summary"></div>
+					</div>
+					<div class="histogram_item item_sick">
+						<span class="desc">Sick Leave (day)</span>
+						<div class="item_sick_summary"></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+</body>
+</html>
