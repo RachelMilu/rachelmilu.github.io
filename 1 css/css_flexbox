@@ -1,7 +1,5 @@
 ​flexbox要记的东西真多，今天就来啃一啃这块硬骨头。 
 学习教程就是大漠的帖子：http://www.w3cplus.com/css3/a-guide-to-flexbox.html
-初步目标有：
-1，实现上下，左右居中；
 
 首先上概念：
 flexbox布局中有两种类型的元素，一种是父元素，也就是容器（称为“伸缩容器”），相对的另一种就叫子元素（称为“伸缩项目”）。
@@ -141,7 +139,46 @@ css:
 		}
 	}
 }
+发现还是有好多个属性是不明白的，继续查资料：
+webkit-box
+http://www.frontopen.com/288.html
+http://wenlong883.blog.163.com/blog/static/1718109162011102281912385/
+http://www.ziqiangxuetang.com/cssref/css3-pr-box-align.html
+http://www.tuicool.com/articles/quQVv2
 
+box-orient           子元素排列 vertical or horizontal
+box-orient(orient译为排列更准确)用来确定父容器里子容器的排列方式，是水平还是垂直。可选属性如下所示：
+horizontal | vertical | inline-axis | block-axis | inherit
+horizontal、inline-axis说明：
+给box设置horizontal或inline-axis属性其效果似乎表现一致，都可将子容器水平排列，具体两者有什么实质差别暂时还没有搞清楚。
+如果父容器选择horizontal或inline-axis属性对子容器进行水平排列，其是对父容器的宽度进行分配划分。
+此时如果父容器定义了高度值，其子容器的高度值设置则无效状态，所有子容器的高度等于父容器的高度值；
+如果父容器不设置高度值，其子容器的高度值才有效并且取最大高度值的子容器的高度。
+
+box-flex             兄弟元素之间比例，仅作一个系数，例如 box-flex 为 2 的子元素两倍于 box-flex 为 1 的子元素。
+目前没有浏览器支持 box-flex 属性。
+Firefox 支持替代的 -moz-box-flex 属性。
+Safari、Opera 以及 Chrome 支持替代的 -webkit-box-flex 属性。
+
+box-align            box 排列
+box-align表示父容器里面子容器的垂直对齐方式，可选参数如下所示：
+start | end | center | baseline | stretch
+
+
+box-pack
+box-pack表示父容器里面子容器的水平对齐方式，可选参数如下所示：
+start | end | center | justify
+justify
+在box-pack表示水平等分父容器宽度（唯一遗憾的是，firefox与opera暂时不支持，只有safari、chrome支持）
+
+box-direction        box 方向
+box-direction用来确定父容器里的子容器排列顺序，具体属性如下代码所示：
+normal | reverse | inherit
+normal是默认值，会按照HTML文档里结构的先后顺序依次展示。
+
+box-flex-group       以组为单位的流体系数
+box-lines
+box-ordinal-group    以组为单位的子元素排列方向
 
 
 
