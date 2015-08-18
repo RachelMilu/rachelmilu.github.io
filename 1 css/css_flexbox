@@ -1,5 +1,12 @@
 ​flexbox要记的东西真多，今天就来啃一啃这块硬骨头。 
 学习教程就是大漠的帖子：http://www.w3cplus.com/css3/a-guide-to-flexbox.html
+最常用的垂直左右居中，for父元素
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
 
 首先上概念：
 flexbox布局中有两种类型的元素，一种是父元素，也就是容器（称为“伸缩容器”），相对的另一种就叫子元素（称为“伸缩项目”）。
