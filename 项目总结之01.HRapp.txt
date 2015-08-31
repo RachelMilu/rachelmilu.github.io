@@ -1,0 +1,26 @@
+首先，这是一个手机客户端、网页客户端、服务端都要写的项目。从开工到现在，耗时两个月，前端3人，后端3人，设计2人，测试2人，ios/android 各0.5人。
+
+覆盖的功能有account/certificate/leavemanagement/chat；
+适配pc端ie10及以上以及其他主流浏览器，手机端android4.0+，ios8+；
+
+架构：
+每个页面是不同的html文件（这个做法在前端实现模拟图片预览器时帮了大忙）
+使用jquery/bootstrap/less+codova，kunagi
+
+前端功技术点有：
+跨域请求
+请求的顺序组织
+web存储
+转场动画：jquery.animsition.js
+android的hard back button
+error Handler
+i18n
+canvas 绘图（chart.js）(兼容retina屏幕)
+less一定要先编译好再打包
+
+
+遇到的坑有：
+手机端页面点击、跳转优化
+滚动
+
+
