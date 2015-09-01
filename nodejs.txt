@@ -1,0 +1,266 @@
+Introduction
+NodeJs是一个服务端运行javascript的平台（你可以理解成一个解析器或者运行环境），跟asp.net,java,python,ruby,php一样，把javascript的定位从前端给移到了后端， 以Google V8为javascript引擎，所以javascript执行效率相当高，能实现高性能Web服务器。
+NodeJS的特点是异步，无阻塞的运行程序. 
+运行在NodeJS中的JS的主要用途有操作磁盘文件或搭建HTTP服务器，NodeJS就相应提供了fs、http等内置对象。
+
+NodeJS能够提供什么样的功能?
+1.命令行工具设计       
+2.web系统设计
+3.客户端javascript编译器
+4.WEB服务器
+
+特性
+Node.js® is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.
+V8引擎本身使用了一些最新的编译技术。这使得用Javascript这类脚本语言编写出来的代码运行速度获得了极大提升，却节省了开发成本。对性能的苛求是Node的一个关键因素。 Javascript是一个事件驱动语言，Node利用了这个优点，编写出可扩展性高的服务器。Node采用了一个称为“事件循环(event loop）”的架构，使得编写可扩展性高的服务器变得既容易又安全。
+Node采用一系列“非阻塞”库来支持事件循环的方式。本质上就是为文件系统、数据库之类的资源提供接口。向文件系统发送一个请求时，无需等待硬盘（寻址并检索文件），硬盘准备好的时候非阻塞接口会通知Node。该模型以可扩展的方式简化了对慢资源的访问， 直观，易懂。尤其是对于熟悉onmouseover、onclick等DOM事件的用户，更有一种似曾相识的感觉。
+虽然让Javascript运行于服务器端不是Node的独特之处，但却是其一强大功能。不得不承认，浏览器环境限制了我们选择编程语言的自由。任何服务器与日益复杂的浏览器客户端应用程序间共享代码的愿望只能通过Javascript来实现。虽然还存在其他一些支持Javascript在服务器端 运行的平台，但因为上述特性，Node发展迅猛，成为事实上的平台。
+在Node启动的很短时间内，社区就已经贡献了大量的扩展库（模块）。其中很多是连接数据库或是其他软件的驱动，但还有很多是凭他们的实力制作出来的非常有用的软件。
+
+NodeJS与一般的后台编译性语言有什么不同?        
+1.NodeJS本身包含一个http服务器，不像asp.net程序需要一个IIS，或者java的程序需要一个apche
+2.NodeJS是异步IO，事件驱动的;一般的程序调用都是执行一个命令之后，线程阻塞，一直等到命令成功之后，才会去执行下面的事情，但是NodeJS不一样，所有的IO，网络通信，磁盘操作都是由事件来控制的，Nodejs进程在同一时刻只会处理一个事件，完成后立即进入事件轮询并检查处理后面的事件。
+3.NodeJS是单线程执行的，除非是多CPU，一般一个CPU都是一个线程执行的，这样可以清除线程上下文切换带来的性能损失
+
+Node.js发展简史
+2009年2月，Ryan Dahl在博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。
+2009年5月，Ryan Dahl在GitHub上发布了最初版本的部分Node.js包，随后几个月里，有人开始使用Node.js开发应用。
+2009年11月和2010年4月，两届JSConf大会都安排了Node.js的讲座。
+2010年年底，Node.js获得云计算服务商Joyent资助，创始人Ryan Dahl加入Joyent全职负责Node.js的发展。
+2011年7月，Node.js在微软的支持下发布Windows版本。
+
+Install
+NodeJS(npm)
+http://www.nodejs.org/
+download the msi file and press “next” to the last…
+
+Bower
+Bower是一个适合Web应用的包管理器，它擅长前端的包管理，通过其API展示了包依赖模型。使得项目不存在系统级的依赖，不同的应用程序间也不会共享依赖，整个依赖树是扁平的。
+Bower依赖于Node和npm。可以使用npm全局安装Bower：
+> npm install -g bower
+More: http://blog.fens.me/nodejs-bower-intro/
+
+
+
+Express
+Express 是一个简洁而灵活的 node.js Web应用框架, 提供一系列强大特性帮助你创建各种Web应用
+丰富的HTTP工具以及来自Connect框架的中间件随取随用，创建强健、友好的API变得快速又简单
+Express 不对 node.js 已有的特性进行二次抽象，我们只是在它之上扩展了Web应用所需的功能
+
+http://expressjs.jser.us/3x_zh-cn/api.html
+
+1.根据你的用户权限的不同，你可能需要在安装bower和express之前先给root权限。
+命令如下：
+sudo chmod 777 local
+这个local是路径名，我改成了自己的／library
+
+2.然后我用以下命令安装bower：
+sudo npm install -g bower
+
+然后如果你发现控制台打出来一堆树形的信息，木有err 和 warn，那就使用
+bower －v 或者 sudo bower －v
+有版本信息粗来 那就是安装好了
+
+3.express安装方式同上
+sudo npm install express -gd
+遇到了很奇怪的事， 控制台打出来一堆树形log， 没有报错信息， 用express －v 命令提示以下信息：
+-bash: express: command not found, 
+
+忧桑， 原来不是用 express －v
+用以下命令：
+npm info express version
+
+我还到我的nodejs的安装目录下去找了，bower在那里， express不在那里。cd /usr/local/bin
+
+4好吧我们现在假设他已经安装好了
+我们从github上download下那个经典的phone cat项目源码：
+百度关键字“github phonecat”即可， 然后解压 重命名 去掉后缀master
+
+5激动人心的时刻来了，进入到你的phonecat目录（注意：一定是你的代码包的目录，在这层目录下应该能找到package.json和REDME.MD这俩文件）， 然后运行以下代码：
+npm start
+
+注意了，教程里面说得是运行 node scripet／web－server.js， 但是你找不到这个文件了，这个app现在不用这个启动，你就照着我说得做吧。
+
+注意：任何可能引起环境变量修改的操作之后，最好重启命令行，这样保险一些。
+
+模块
+Node.js使用Module模块去划分不同的功能，以简化应用的开发。Modules模块有点象C语言中的类库。每一个Node.js的类库都包含了十分丰富的各类函数，比如http模块就包含了和http功能相关的很多函数，可以帮助开发者很容易地对比如http,tcp/udp等进行操作，还可以很容易的创建http和tcp/udp的服务器。
+要在程序中使用模块是十分方便的，只需要如下：
+在这里，引入了http类库，并且对http类库的引用存放在http变量中了。这个时候，node.js会在我们应用中搜索是否存在node_modules的目录，并且搜索这个目录中是否存在http的模块。如果node.js找不到这个目录，则会到全局模块缓存中去寻找，用户可以通过相对或者绝对路径，指定模块的位置，比如：
+var myModule = require('./myModule.js');
+模块中包含了很多功能代码片断，在模块中的代码大部分都是私有的，意思是在模块中定义的函数方法和变量，都只能在同一个模块中被调用。当然，可以将某些方法和变量暴露到模块外，这个时候可以使用exports对象去实现。
+
+Api
+Fs
+官方文档： http://nodejs.org/api/buffer.html
+NodeJS通过fs内置模块提供对文件的操作。fs模块提供的API基本上可以分为以下三类：
+文件属性读写。
+其中常用的有fs.stat、fs.chmod、fs.chown等等。
+文件内容读写。
+其中常用的有fs.readFile、fs.readdir、fs.writeFile、fs.mkdir等等。
+底层文件操作。
+其中常用的有fs.open、fs.read、fs.write、fs.close等等。
+NodeJS最精华的异步IO模型在fs模块里有着充分的体现，例如上边提到的这些API都通过回调函数传递结果。以fs.readFile为例：
+	fs.readFile(pathname, function (err, data) {
+    if (err) {
+        // Deal with error.
+    } else {
+        // Deal with data.
+    }
+});
+如上边代码所示，基本上所有fs模块API的回调参数都有两个。第一个参数在有错误发生时等于异常对象，第二个参数始终用于返回API方法执行结果。
+此外，fs模块的所有异步API都有对应的同步版本，用于无法使用异步操作时，或者同步操作更方便时的情况。同步API除了方法名的末尾多了一个Sync之外，异常对象与执行结果的传递方式也有相应变化。同样以fs.readFileSync为例：
+try {
+    var data = fs.readFileSync(pathname);
+    // Deal with data.
+} catch (err) {
+    // Deal with error.
+}fs模块提供的API很多，这里不一一介绍，需要时请自行查阅官方文档。
+
+http
+http'模块提供两种使用方式：
+作为服务端使用时，创建一个HTTP服务器，监听HTTP客户端请求并返回响应。
+作为客户端使用时，发起一个HTTP客户端请求，获取服务端响应。
+HTTP请求本质上是一个数据流，由请求头（headers）和请求体（body）组成。
+HTTP请求在发送给服务器时，可以认为是按照从头到尾的顺序一个字节一个字节地以数据流方式发送的。而http模块创建的HTTP服务器在接收到完整的请求头后，就会调用回调函数。在回调函数中，除了可以使用request对象访问请求头数据外，还能把request对象当作一个只读数据流来访问请求体数据。
+HTTP响应本质上也是一个数据流，同样由响应头（headers）和响应体（body）组成。
+在回调函数中，除了可以使用response对象来写入响应头数据外，还能把response对象当作一个只写数据流来写入响应体数据。
+HTTPS
+官方文档： http://nodejs.org/api/https.html
+https模块与http模块极为类似，区别在于https模块需要额外处理SSL证书。
+request/response
+request和response对象除了用于读写头数据外，都可以当作数据流来操作。
+url.parse方法加上request.url属性是处理HTTP请求时的固定搭配。
+
+Net
+net模块可用于创建Socket服务器或Socket客户端。由于Socket在前端领域的使用范围还不是很广，这里先不涉及到WebSocket的介绍，仅仅简单演示一下如何从Socket层面来实现HTTP请求和响应。
+
+首先我们来看一个使用Socket搭建一个很不严谨的HTTP服务器的例子。这个HTTP服务器不管收到啥请求，都固定返回相同的响应。
+net.createServer(function (conn) {
+    conn.on('data', function (data) {
+        conn.write([
+            'HTTP/1.1 200 OK',
+            'Content-Type: text/plain',
+            'Content-Length: 11',
+            '',
+            'Hello World'
+        ].join('\n'));
+    });
+}).listen(80);
+接着我们来看一个使用Socket发起HTTP客户端请求的例子。这个例子中，Socket客户端在建立连接后发送了一个HTTP GET请求，并通过data事件监听函数来获取服务器响应。
+var options = {
+        port: 80,
+        host: 'www.example.com'
+    };
+ 
+var client = net.connect(options, function () {
+        client.write([
+            'GET / HTTP/1.1',
+            'User-Agent: curl/7.26.0',
+            'Host: www.baidu.com',
+            'Accept: */*',
+            '',
+            ''
+        ].join('\n'));
+    });
+ 
+client.on('data', function (data) {
+    console.log(data.toString());
+    client.end();
+});
+process/child process
+Process
+官方文档： http://nodejs.org/api/process.html
+任何一个进程都有启动进程时使用的命令行参数，有标准输入标准输出，有运行权限，有运行环境和运行状态。在NodeJS中，可以通过process对象感知和控制NodeJS自身进程的方方面面。另外需要注意的是，process不是内置模块，而是一个全局对象，因此在任何地方都可以直接使用。
+获取命令行参数
+function main(argv) {
+    // ...
+}
+ 
+main(process.argv.slice(2));
+如何退出程序
+通常一个程序做完所有事情后就正常退出了，这时程序的退出状态码为0。或者一个程序运行时发生了异常后就挂了，这时程序的退出状态码不等于0。如果我们在代码中捕获了某个异常，但是觉得程序不应该继续运行下去，需要立即退出，并且需要把退出状态码设置为指定数字，比如1，就可以按照以下方式：
+try {
+    // ...
+} catch (err) {
+    // ...
+    process.exit(1);
+}
+如何控制输入输出
+NodeJS程序的标准输入流（stdin）、一个标准输出流（stdout）、一个标准错误流（stderr）分别对应process.stdin、process.stdout和process.stderr，第一个是只读数据流，后边两个是只写数据流，对它们的操作按照对数据流的操作方式即可。例如，console.log可以按照以下方式实现。
+function log() {
+    process.stdout.write(
+        util.format.apply(util, arguments) + '\n');
+}
+
+如何降权
+在*nix系统下，我们知道需要使用root权限才能监听1024以下端口。但是一旦完成端口监听后，继续让程序运行在root权限下存在安全隐患，因此最好能把权限降下来。
+如何创建子进程
+以下是一个创建NodeJS子进程的例子。
+var child = child_process.spawn('node', [ 'xxx.js' ]);
+ 
+child.stdout.on('data', function (data) {
+    console.log('stdout: ' + data);
+});
+ 
+child.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+});
+ 
+child.on('close', function (code) {
+    console.log('child process exited with code ' + code);
+});
+上例中使用了.spawn(exec, args, options)方法，该方法支持三个参数。第一个参数是执行文件路径，可以是执行文件的相对或绝对路径，也可以是根据PATH环境变量能找到的执行文件名。第二个参数中，数组中的每个成员都按顺序对应一个命令行参数。第三个参数可选，用于配置子进程的执行环境与行为。
+
+另外，上例中虽然通过子进程对象的.stdout和.stderr访问子进程的输出，但通过options.stdio字段的不同配置，可以将子进程的输入输出重定向到任何数据流上，或者让子进程共享父进程的标准输入输出流，或者直接忽略子进程的输入输出。
+Child Process
+官方文档： http://nodejs.org/api/child_process.html
+使用child_process模块可以创建和控制子进程。该模块提供的API中最核心的是.spawn，其余API都是针对特定使用场景对它的进一步封装，算是一种语法糖。
+
+无论是通过process对象的uncaughtException事件捕获到全局异常，还是通过子域对象的error事件捕获到了子域异常，在NodeJS官方文档里都强烈建议处理完异常后立即重启程序，而不是让程序继续运行。按照官方文档的说法，发生异常后的程序处于一个不确定的运行状态，如果不立即退出的话，程序可能会发生严重内存泄漏，也可能表现得很奇怪。
+但这里需要澄清一些事实。JS本身的throw..try..catch异常处理机制并不会导致内存泄漏，也不会让程序的执行结果出乎意料，但NodeJS并不是存粹的JS。NodeJS里大量的API内部是用C/C++实现的，因此NodeJS程序的运行过程中，代码执行路径穿梭于JS引擎内部和外部，而JS的异常抛出机制可能会打断正常的代码执行流程，导致C/C++部分的代码表现异常，进而导致内存泄漏等问题。
+因此，使用uncaughtException或domain捕获异常，代码执行路径里涉及到了C/C++部分的代码时，如果不能确定是否会导致内存泄漏等问题，最好在处理完异常后重启程序比较妥当。而使用try语句捕获异常时一般捕获到的都是JS本身的异常，不用担心上诉问题。
+
+Cluster
+官方文档： http://nodejs.org/api/cluster.html
+cluster模块是对child_process模块的进一步封装，专用于解决单进程NodeJS Web服务器无法充分利用多核CPU的问题。使用该模块可以简化多进程服务器程序的开发，让每个核上运行一个工作进程，并统一通过主进程监听端口和分发请求。
+
+高并发和I/O非阻塞的实现
+http://www.webjss.com/nodejs-comments.html
+
+基于事件的I/O处理模型
+http://www.infoq.com/cn/articles/nodejs-asynchronous-io/
+
+ 
+
+Hello World
+DEMO1
+var http = require('http');
+ 
+http.createServer(function (request, response) {
+    response.writeHead(200, { 'Content-Type': 'text-plain' });
+    response.end('Hello World\n');
+}).listen(8124);
+
+Package.json
+在NodeJS项目中，用package.json文件来声明项目中使用的模块，这样在新的环境部署时，只要在package.json文件所在的目录执行 npm install 命令即可安装所需要的模块。
+
+package.json文件中可配置的项有：名称(name)、应用描述(description)、版本号(version)、应用的配置项(config)、作者(author)、资源仓库地址(repository)、授权方式(licenses)、目录(directories)、应用入口文件(main)、命令行文件(bin)、应用依赖模块(dependencies)、开发环境依赖模块(devDependencies)、运行引擎(engines)和脚本(scripts)等；
+
+默认如下：
+
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.1.0",
+    "jade": "*"
+  }
+}
+关键的就是dependencies节点，用于配置应用所依赖的模块列表。
+DEMO2
+Summary
+请记住关键字“基于事件驱动”、“非阻塞I/O”、适用于高并发、I/O密集应用.
