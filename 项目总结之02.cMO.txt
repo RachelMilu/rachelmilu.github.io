@@ -1,0 +1,15 @@
+技术背景：
+angular、ionic，hybrid app native 那边用的是捕获location.href的值来call hook的
+
+由于项目伊始没有采用ionic解决方案，单纯的angular项目在手机端遇到了许多体验上的问题。滚动不流畅，反应卡顿，应用闪退。
+
+后来，使用了angular-ui-router，页面转场动画更流畅。
+
+闪退问题见 Angular_memory_leak.txt 感觉并没有彻底解决
+
+call hook的方法决定了在前端的代码中不得不创造一个全局scope来绑一个公用方法：
+<html ng-app="app" id="app" ng-controller="AppController"></html>
+function hookCallback(data){
+	angular.element(document.getElementById('app')).scope().hookCallback(data);
+}
+
