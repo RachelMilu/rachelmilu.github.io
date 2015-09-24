@@ -1,0 +1,25 @@
+http://www.infoq.com/cn/articles/react-art-of-simplity/
+摘要：
+0.13版 以前
+<button onClick={this.handleSubmit}>Submit</button>
+
+以后：
+<button onClick={this.handleSubmit.bind(this)}>Submit</button>
+
+做事件绑定时我们需要通过bind（或类似函数）来实现一个闭包以让事件处理函数自带上下文信息，这是由JavaScript语言特性决定的。而在0.13版本之前，React会自动在初始化时对组件的每一个方法做一次这样的绑定，类似于this.func = this.func.bind(this)，这样在JSX的事件绑定中就可以直接写为onClick={this.handleSubmit}。
+表面上看自动绑定给开发带来了便利，而Facebook却认为这破坏了JavaScript的语言习惯，其背后的神奇（Magic）逻辑或许会给初学者带来困惑，甚至开发者如果从React再转到其它库也可能会无所适从。基于同样的理由，React还取消了对mixin的支持，基于ES6的React组件不再能够以mixin的形式进行代码复用或者扩展。尽管这带来了很大不便，但Facebook认为mixin增加了代码的不可预测性，无法直观的去理解。关于mixin的思考，还可以参考这篇文章。
+
+以简单直观、符合习惯的（idiomatic）方式去编程，让代码更容易被理解，从而易于维护和不断演进。这正是React的设计哲学。
+
+组件是React中构建用户界面的基本单位。它们和外界的交互除了状态（state）之外，还有就是属性（props）。
+
+UI界面是一棵DOM树，对应的我们创建一个全局唯一的数据模型，每次数据模型有任何变化，都将整个数据模型应用到UI DOM树上，由React来负责去更新需要更新的界面部分。
+
+
+React思想的衍生：React Native, React Canvas等等
+
+在前几天的Facebook F8开发者大会上，React Native终于众望所归的发布，它将React的思想延伸到了原生移动开发。它的口号是“Learn Once, Write Anywhere”，有React开发经验的开发人员将可以无缝的进行React Native开发。无论是组件化的思想，调试工具，动态代码加载等React具有的强大特性都可以应用在React Native。相信这会对以后的移动开发布局产生重要影响。
+
+React对UI层进行了完美的抽象，写Web界面时甚至能够做到完全的去DOM化：开发者可以无需进行任何DOM操作。因此，这也让对UI层进行整体替换成为了可能。React Native正是将浏览器基于DOM的UI层换成了iOS或者Android的原生控件。而Flipboard则将UI层换成了Canvas。
+
+React Canvas是Flipboard出品的一套前端框架，所有的界面元素都通过Canvas来绘制，infoQ之前也有文章对其进行了介绍。Flipboard追求极致的性能和用户体验，因此对浏览器的缓慢DOM操作深恶痛绝，不惜大刀阔斧彻底舍弃了DOM，而完全用Canvas实现了整套UI控件。有兴趣的同学不妨一试。
