@@ -1,0 +1,12 @@
+http://segmentfault.com/a/1190000002793786?utm_source=tuicool
+
+http://segmentfault.com/a/1190000002499052
+
+reflux主要提供了四个函数：
+
+joinLeading: 只响应第一次emit出来的，在完成一次trigger前，剩下的emission不管了。
+joinTrailing: 在一次trigger前，无视最后一次emission出来的数据。
+joinConcat: 在一次trigger前，保存所有emission的数据。
+joinStrict: 如果在一次trigger之前多次emit，抛异常。
+
+https://github.com/reflux/refluxjs
