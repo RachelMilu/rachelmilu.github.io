@@ -1,0 +1,21 @@
+React v0.14 概览 http://undefinedblog.com/react-v0-14/
+
+var React = require('react');  
+var ReactDOM = require('react-dom');
+
+var MyComponent = React.createClass({  
+  render: function() {
+    return <div>Hello World</div>;
+  }
+});
+
+
+refs 变成了真正的 DOM 节点
+
+当我们需要获取 React 组件上某个 DOM 节点时，React 提供了 refs 方法方便我们快速引用。为了方便我们使用，React 还「贴心」地对 refs 做了一层封装，使用 this.refs.xxx.getDOMNode() 或 React.findDOMNode(this.refs.xxx) 可以获取到真正的 DOM 节点。
+
+结果发现大家真正需要的就是 DOM 节点本身，封装了半天完全是浪费感情。
+
+于是在 v0.14 版中 refs 指向的就是 DOM 节点，同时也会保留 .getDOMNode() 方法（带 warning），最终在 v0.15 版中去除该方法。
+
+ReactDOM.render(<MyComponent />, node);  
