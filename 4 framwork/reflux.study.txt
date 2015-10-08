@@ -20,3 +20,85 @@ http://henleyedition.com/building-an-app-using-react-and-refluxjs/
 http://www.tuicool.com/articles/JJN3uq3
 http://blog.jeffdouglas.com/2015/04/03/building-spas-with-react-reflux-for-salesforce/
 这里面有个demo https://github.com/jeffdonthemic/react-banners-salesforce
+
+一个简单的demo：
+
+##scoreAction.js:
+var Reflux = require('reflux');
+
+var ScoresActions = Reflux.createActions({
+    'editArray': {},
+    'push': {}
+});
+
+module.exports = ScoresActions;
+
+
+##scoresStore.js
+var Reflux = require('reflux');
+var actions = require('./scoreActions');
+
+var ScoresStore = Reflux.createStore({
+    items: [0,0,0,0,0],
+    init: function () {
+        this.listenTo(actions.editArray, this.editArray);
+        this.listenTo(actions.push, this.push);
+    },
+    editArray: function (i,value) {
+        console.log(i,"--->",value)
+    },
+    push:function(value){
+        console.log(value);
+    }
+});
+
+module.exports = ScoresStore;
+
+##compnonent/index.js
+require('./index.less');
+var React = require('react');
+var Reflux = require('reflux');
+var ScoresStore = require('../store/scoresStore');
+var ScoresActions = require('../store/scoreActions');
+
+
+var QuestionPage = React.createClass({
+    getInitialState: function () {
+        var self = this;
+        $(document).on("scoreUpdated",function(){
+            self.setState({
+                scoreRs: self.props.scorers
+            });
+        });
+        return {
+            scoreRs: this.props.scorers,
+        }
+    },
+    handleClick: function(e) {
+      ScoresActions.editArray($(e.target).data("questionid"),$(e.target).data("score"));
+    },
+    componentDidMount: function(){
+    },
+    componentDidUpdate:function(){
+    },
+    submitHandler: function(e){
+    },
+    
+    getElem: function(questionId){
+    },
+
+    render: function () {
+        return (
+            <div className={"page page-question page-question-" + this.props.question.id}>
+              
+            </div>
+        );
+    }
+});
+
+module.exports = QuestionPage;
+
+
+
+
+
