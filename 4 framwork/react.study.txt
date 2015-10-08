@@ -23,3 +23,13 @@ React思想的衍生：React Native, React Canvas等等
 React对UI层进行了完美的抽象，写Web界面时甚至能够做到完全的去DOM化：开发者可以无需进行任何DOM操作。因此，这也让对UI层进行整体替换成为了可能。React Native正是将浏览器基于DOM的UI层换成了iOS或者Android的原生控件。而Flipboard则将UI层换成了Canvas。
 
 React Canvas是Flipboard出品的一套前端框架，所有的界面元素都通过Canvas来绘制，infoQ之前也有文章对其进行了介绍。Flipboard追求极致的性能和用户体验，因此对浏览器的缓慢DOM操作深恶痛绝，不惜大刀阔斧彻底舍弃了DOM，而完全用Canvas实现了整套UI控件。有兴趣的同学不妨一试。
+
+渲染顺序：
+/* mount */
+getDefaultProps  
+getInitialState  
+componentWillMount  
+render  
+componentDidMount  
+/* unmount */
+componentWillUnmount 
