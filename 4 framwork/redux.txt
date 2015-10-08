@@ -2,6 +2,8 @@
 http://camsong.github.io/redux-in-chinese/index.html
 https://github.com/xgrommx/awesome-redux
 
+https://github.com/rackt/redux/tree/master/examples
+
 http://camsong.github.io/redux-in-chinese/
 以下是摘抄：
 
@@ -17,3 +19,5 @@ Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
 
 Redux 除了和 React 一起用外，还支持其它界面库。
 它体小精悍（只有2kB）且没有任何依赖。
+
+
