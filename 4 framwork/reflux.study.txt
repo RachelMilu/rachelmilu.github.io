@@ -10,3 +10,13 @@ joinConcat: 在一次trigger前，保存所有emission的数据。
 joinStrict: 如果在一次trigger之前多次emit，抛异常。
 
 https://github.com/reflux/refluxjs
+
+最好是“One Store, One Component”；
+“Single File For Actions”；
+http://henleyedition.com/building-an-app-using-react-and-refluxjs/
+
+
+
+
+http://blog.jeffdouglas.com/2015/04/03/building-spas-with-react-reflux-for-salesforce/
+这里面有个demo https://github.com/jeffdonthemic/react-banners-salesforce
