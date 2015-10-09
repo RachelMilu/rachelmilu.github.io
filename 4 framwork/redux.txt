@@ -10,14 +10,24 @@ http://camsong.github.io/redux-in-chinese/
 在线 Gitbook 地址：http://camsong.github.io/redux-in-chinese/
 
 英文原版：http://rackt.github.io/redux/
+遇到的问题：
+代码：
+在jsx文件中用到import时：
+import {combineReducers, createStore } from 'redux';
+import * as reducers from '../reducers/reducers';
+import  {EDIT_ARRAY,PUSH_TO_ARRAY,editArray, pushToArray} from '../actions/actions'
 
-翻译正在进行中，加入我们
+报错：
+ERROR in ./js/questionpage/index.jsx
+Module build failed: Error: Parse Error: Line 5: Illegal import declaration
+    at throwError (/Users/gaoxiaoqian/node_modules/jsx-loader/node_modules/jstransform/node_modules/esprima-fb/esprima.js:2823:21)
+    at throwErrorTolerant (/Users/gaoxiaoqian/node_modules/jsx-loader/node_modules/jstransform/node_modules/esprima-fb/esprima.js:2835:24)
+    
+解决办法：
+去掉jsx-loader就可以了
 
-Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
+http://www.infoq.com/cn/articles/react-jsx-and-component?utm_source=tuicool
+使用Babel进行JSX编译
 
-可以让你构建一致化的应用，运行于不同的环境（客户端、服务器、原生应用），并且易于测试。不仅于此，它还提供 超爽的开发体验，比如有一个时间旅行调试器可以编辑后实时预览。
-
-Redux 除了和 React 一起用外，还支持其它界面库。
-它体小精悍（只有2kB）且没有任何依赖。
-
+就在本文撰写过程中，React官方博客发布了一篇文章，声明其自身用于JSX语法解析的编译器JSTransform已经过期，不再维护，React JS和React Native已经全部采用第三方Babel的JSX编译器实现。原因是两者在功能上已经完全重复，而Babel作为专门的JavaScript语法编译工具，提供了更为强大的功能。在这里笔者也不得不感叹Facebook的胸怀，以非常开放的态度去拥抱开源社区，从而达到共赢的目的。
 
