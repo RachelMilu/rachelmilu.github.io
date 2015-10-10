@@ -1,0 +1,20 @@
+知乎上面抄来的：
+在外部浏览器中，通过<a href="weixin://">打开微信</a>可以打开微信；
+通过<a href="weixin://scanqrcode">打开微信扫一扫</a>可以打开微信并调用扫一扫；
+那么如果打开微信并且跳转到指定的链接呢？有没有关于微信URL Scheme的详细说明呢？
+
+weixin://dl/scan 扫一扫
+weixin://dl/feedback 反馈
+weixin://dl/moments 朋友圈
+weixin://dl/settings 设置
+weixin://dl/notifications 消息通知设置
+weixin://dl/chat 聊天设置
+weixin://dl/general 通用设置
+weixin://dl/officialaccounts 公众号
+weixin://dl/games 游戏
+weixin://dl/help 帮助
+weixin://dl/feedback 反馈
+weixin://dl/profile 个人信息
+weixin://dl/features 功能插件
+
+打开微信内置浏览器的URL scheme是“weixin://dl/privacy”，链接参数还不清楚。已经知道的话希望能分享下。
