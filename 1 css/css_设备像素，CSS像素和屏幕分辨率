@@ -37,11 +37,39 @@ viewport指的是浏览器通过宽度比例来计算元素尺寸的一块区域
 <meta name="viewport" width="device-width">
 
 
+http://www.cnblogs.com/2050/p/3877280.html
+
+viewport 
+layout viewport：一般是980px；
+ppk把浏览器默认的viewport叫做 layout viewport。用document.documentElement.clientWidth 获取。
+
+visual viewport：浏览器可视区域的大小；它会根据initial-scale的值发生变化的。
+ppk把代表浏览器可视区域的大小的viewport叫做 visual viewport。visual viewport的宽度可以通过window.innerWidth 来获取，但在Android 2, Oprea mini 和 UC 8中无法正确获取。
+
+ideal viewport：ideal viewport的宽度等于移动设备的屏幕宽度；它是不会变的！！！！
+ppk把这能够完美适配各种移动设备的viewport叫做 ideal viewport，ideal viewport的宽度等于移动设备的屏幕宽度，也就是第三个viewport——移动设备的理想viewport。
+（所谓的完美适配指的是，首先不需要用户缩放和横向滚动条就能正常的查看网站的所有内容；第二，显示的文字的大小是合适，比如一段14px大小的文字，不会因为在一个高密度像素的屏幕里显示得太小而无法看清，理想的情况是这段14px的文字无论是在何种密度屏幕，何种分辨率下，显示出来的大小都是差不多的。当然，不只是文字，其他元素像图片什么的也是这个道理。）
+
+meta viewport中的width能控制layout viewport的宽度，
+所以当我们写下面的代码：
+<meta name="viewport" content="width=device-width">
+就是把默认的layout viewport的宽度设为移动设备的屏幕宽度，从而得到了ideal viewport。
+（据说：这样子写，在iphone和ipad上，无论是竖屏还是横屏，宽度都是竖屏时ideal viewport的宽度。）
+还有这句话：
+<meta name="viewport" content="initial-scale=1">
+也可以把当前的的viewport变为 ideal viewport，原因是页面的初始缩放是相对于 ideal viewport来进行缩放的（也就是相对于设备宽度进行缩放）
+
+当width 和initual-scale同时出现时，
+<meta name="viewport" content="width=400, initial-scale=1">
+浏览器会取它们两个中较大的那个值。
+也就是说，当width=400，ideal viewport的宽度为320时，取的是400；当width=400， ideal viewport的宽度为480时，取的是ideal viewport的宽度。
+推论，当initial-scale > 1时，width如果大于设备宽度，就取width；当initial-scale < 1时，width如果小于设备宽度，就取ideal viewport；
+
+然后，为了解决ie，iphon／ipad横竖屏的缺陷，两个都写上：
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-
-
-
+在iphone和ipad上，无论你给viewport设的宽的是多少，如果没有指定默认的缩放值，则iphone和ipad会自动计算这个缩放值，以达到当前页面不会出现横向滚动条(或者说viewport的宽度就是屏幕的宽度)的目的。
 
 
 
