@@ -1,0 +1,133 @@
+以前木有注意看过遮罩相关的代码，以为遮罩弹出来的话，后面的代码就自动不能点击，不能滚动。。。
+
+今天遇到一个页面，遮罩出来之后依然可以滚动。。。才发现原来这玩意是要人控制的。。。
+
+出现问题的页面，没有用任何的滚动插件，一路自然地排版下去了，然后遮罩设了一个position fixed。
+
+那么问题来了，我以前遇到过的，出了遮罩就自动禁用掉后面层的滚动和点击，是咋实现的？？
+
+然后我就开始场景再现：
+最后发现。。。要想做到遮罩粗来后面的不能滚，
+前后两个层，列表层必须同时设置了overflow 和height值(这样它就能滚)，然后，遮罩层高度应小于或等于屏幕高度。。。
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="width=device-width,initial-scale=1" name="viewport"
+    <title>遮罩测试</title>
+  
+    <script  src="rangy-1.2.3/jquery-2.1.3.js"></script>
+<style>
+#main {
+    height: 500px;
+    overflow-y : auto;  
+    -webkit-overflow-scrolling : touch; 
+}
+
+.ul li {
+    height: 50px;
+    width: 100%;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background: rgba(0,0,0,.5);
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+  <script type="text/javascript">
+function clickHandler(){
+    var maskEl = document.getElementById("mask");
+    document.getElementById("mask").style.display = "block";
+
+    maskEl.addEventListener('touchstart',touch, false);  
+    maskEl.addEventListener('touchmove',touch, false);  
+    maskEl.addEventListener('touchend',touch, false);  
+
+    function touch (event){  
+        /*
+        var event = event || window.event;  
+           
+        //var oInp = document.getElementById("inp");  
+   
+        switch(event.type){  
+            case "touchstart":  
+                event.preventDefault(); 
+                event.stopPropagation() 
+                //oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
+                break;  
+            case "touchend":  
+                //oInp.innerHTML = "<br>Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";  
+                break;  
+            case "touchmove":  
+                event.preventDefault(); 
+                event.stopPropagation() 
+                //oInp.innerHTML = "<br>Touch moved (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
+                break;  
+        } 
+        */ 
+           
+    }  
+}
+
+function closeHandler(){
+    document.getElementById("mask").style.display = "none";
+}
+  </script>
+</head>
+<body class="qiushagnxin">
+    <div>
+        <div id="main">
+    <ul class="ul">
+        <li onClick="clickHandler(this)">click here to show the mask</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+        <li>11111111111</li>
+    </ul>
+
+</div>
+<div id="mask" class="mask hidden">
+    <div onclick="closeHandler(this)">close</div>
+</div>
+</div>
+</body>
+
+所以～
+要改这个问题，要么页面布局搞成上面那样子，要么。。。据说用js也可以。。。
+然而～我用下面两行代码并没有神马效果：
+event.preventDefault(); 
+event.stopPropagation();
+倒是在遮罩弹出时在body上面加overflow hidden，close是关闭 可以做到。。。
+js的办法，望指正。。。
+
+
