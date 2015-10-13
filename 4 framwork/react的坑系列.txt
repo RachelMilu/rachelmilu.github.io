@@ -4,5 +4,18 @@
 
 2.react，position fixed
 场景描述：
-在弹出的遮罩层里有一个form表单，当input框获得焦点时，表单容器会从上倒下闪着进来（看起来是render了一遍）
+在弹出的遮罩层（fixed）里有一个form表单（absolute 居中），当input框获得焦点时，表单容器会从上倒下闪着进来
+
+原因：
+对的没错就是fixed ＋ absolute：left／top的问题！
+
+解决方案一（仅限webapp内打开，浏览器一般会有bug）：
+把html／body／ 的overflow设成hidden；
+再给列表的container设置屏幕高度和overflow:auto,还有-webkit-overflow-scrolling:touch
+
+解决方案二（适用于所有场景）
+
+
+
+
 
