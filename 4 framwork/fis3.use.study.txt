@@ -1,0 +1,31 @@
+在mac上为localhost配置域名：
+http://www.cnblogs.com/snandy/archive/2012/11/13/2765381.html
+
+环境要求：
+node 4.x
+fis3
+
+然后npm instll
+
+构建：
+fis3 release -d ./output
+fis3 release -w   启动文件监听，修改文件会构建发布
+fis3 release -wL 浏览器自动刷新
+
+调试：
+不指定目录时 查看文件
+fis3 server open
+
+启动：
+fis3 server start
+浏览器会自动打开 http://127.0.0.1:8080，默认监听端口 8080
+
+修改端口号及帮助：
+fis3 server -h
+
+FIS3 内置的 Server 是常驻的，如果不重启计算机或者调用命令关闭。
+
+所以后续只需访问对应链接即可，而不需要每次 release 就启动一次 server。
+
+
+
