@@ -16,6 +16,14 @@
 解决方案二（适用于所有场景）
 
 
+3.react中 onclick时常失效
+有时是在ios设备上：button
+<button type="button" className="common-btn" onClick={this.submitHandler}>提交</button>这样是可以的
+
+有时是在有写安卓机上
+在div上面绑onclick就会桂雕
+
+
 
 
 
