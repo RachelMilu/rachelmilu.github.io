@@ -20,10 +20,13 @@
 有时是在ios设备上：button
 <button type="button" className="common-btn" onClick={this.submitHandler}>提交</button>这样是可以的
 
-有时是在有写安卓机上
+有时是在安卓机上
 在div上面绑onclick就会桂雕
 
-
+解决办法：
+componentDidMount: function(){
+//这里面写绑定事件
+}
 
 
 
