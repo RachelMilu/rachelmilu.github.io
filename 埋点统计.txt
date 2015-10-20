@@ -1,0 +1,20 @@
+花钱的：webtrends
+
+
+不花钱的：piwik
+https://github.com/piwik/piwik/blob/master/js/piwik.js
+
+API:
+http://developer.piwik.org/api-reference/tracking-javascript
+
+ var _paq = _paq || [];
+  _paq.push(['setCustomVariable',1,"appname”,”DOMAIN"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+    
+ 点击埋点：
+ trackEvent(category, action, [name], [value])  //这玩意儿没有回调，得自己改改源码
+ 
+ 链接：
+ trackLink( url, linkType )//这个api有回调
+  
