@@ -16,6 +16,7 @@
 解决方案二（适用于所有场景）
 
 
+
 3.react中 onclick时常失效
 有时是在ios设备上：button
 <button type="button" className="common-btn" onClick={this.submitHandler}>提交</button>这样是可以的
@@ -27,6 +28,9 @@
 componentDidMount: function(){
 //这里面写绑定事件
 }
+
+4版本不同：
+比如  this.refs.phone  的值，以前是 dom ,  现在需要通过  this.refs.phone.getDOMNode()  来获取
 
 
 
