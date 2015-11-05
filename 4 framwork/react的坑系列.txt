@@ -1,8 +1,24 @@
-1.react + jquery 的坑
+
+1.react中 onclick时常失效
+所有ios设备和部分安卓设备：
+在div／span等非表单元素上使用react的onClick事件 触发不了的。
+解决办法：
+componentDidMount: function(){
+//这里面用jquery或者js写绑定事件
+
+}
+
+2.表单取值 注意不同版本不同写法：
+0.13的版本里 this.refs.phone.getDOMNode()  来获取
+比如0.14的版本获取dome的值用  this.refs.phone  的值，getDOMNode()方法将在0.15中废弃
+
+
+
+3.react + jquery 的坑
 场景描述：
 用setstate方法修改dom上的值（data-）之后，用$(this).data('key')获取到的依然是旧的值
 
-2.react，position fixed
+4.react，position fixed
 场景描述：
 在弹出的遮罩层（fixed）里有一个form表单（absolute 居中），当input框获得焦点时，表单容器会从上倒下闪着进来
 
@@ -13,24 +29,8 @@
 把html／body／ 的overflow设成hidden；
 再给列表的container设置屏幕高度和overflow:auto,还有-webkit-overflow-scrolling:touch
 
-解决方案二（适用于所有场景）
 
 
-
-3.react中 onclick时常失效
-有时是在ios设备上：button
-<button type="button" className="common-btn" onClick={this.submitHandler}>提交</button>这样是可以的
-
-有时是在安卓机上
-在div上面绑onclick就会桂雕
-
-解决办法：
-componentDidMount: function(){
-//这里面写绑定事件
-}
-
-4版本不同：
-比如  this.refs.phone  的值，以前是 dom ,  现在需要通过  this.refs.phone.getDOMNode()  来获取
 
 
 
