@@ -18,6 +18,14 @@ componentDidMount: function(){
 场景描述：
 用setstate方法修改dom上的值（data-）之后，用$(this).data('key')获取到的依然是旧的值
 
+原因:
+jquery的data方法其实是个property，并非data-xxx的attr
+
+解决方案：
+用this.dataset.key
+
+
+
 4.react，position fixed
 场景描述：
 在弹出的遮罩层（fixed）里有一个form表单（absolute 居中），当input框获得焦点时，表单容器会从上倒下闪着进来
