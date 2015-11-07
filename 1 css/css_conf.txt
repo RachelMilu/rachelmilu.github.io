@@ -1,0 +1,199 @@
+勾股：
+1.zorro.io
+
+2.启示录
+
+flexible（理想的显示）
+0.3.1 rem 计算有误？
+灵活web设计（flexible web design：zoe）
+lib.flexible 库：
+px改成rem，假设所有的屏幕宽度都是固定的（10rem），
+字体大小不推荐用rem，还是用px，配合data－dpr（font－size＊＝dpr）
+
+responsive（不同屏幕不同设计和展现：布局／交互形态）
+screen height：4/3， 16/9.。。（宽度固定，高度设断点？）
+
+
+workflow
+。。。
+适配：屏幕大小／清晰度／。。。
+
+图片大小／展示的尺寸／画质 三者如何平衡
+
+图片cdn，加不同的后缀
+lib.img
+px2rem库（npm）
+image for dpr（css bg里）（data－dpr配合image路径里的参数后缀）
+postcss，css写到postcss里，再做一个插件集成进去
+
+最后一公里
+main.vue？
+
+
+团队约定convention
+不需要强制哒～
+Adam...可配合market place做项目初始化的脚手架命令行工具。。。。。。。。。。
+
+---------------------------------------------
+
+Michael/高博
+css checker old：http://jigsaw.w3.org/css-validator/ help you to catch mistakers
+
+CSS Checker New Address:
+// https://csschecker.w3.org
+https://github.com/w3c/css-checher
+
+language use: JavaScript + NodeJS ??    
+
+Tab Atkins written CSS parser in JavaScript:
+https:/github.com/tabatkins/parse-css
+
+Simon Sapin CSS parser written in Rust:
+https:/github.com/servo/rust-cssparser
+
+林展新 蚂蚁金服 体验技术部 广州
+企业级
+
+MY.style 2010
+AliceUI
+
+flaming cloud
+基于angularjs的企业应用的前端解决方案
+属性优先
+	语意明确
+	命名短［type＝button］
+	自继承
+
+用css写圆型进度条咋写？？（progress-cricle）
+
+栅格
+
+
+icon命名： name－type－direction
+
+ant design
+
+
+
+css预处理器
+网易 郑海波 拴萝卜的棍子
+
+leeluolee.github.io
+预处理器 MCSS
+
+
+避免深层选择器序列 即避免逗号隔开的选择器里再有深层的选择
+
+避免在深层选择器序列中使用@extend
+
+@xtend统一写在前面，优先级比其他属性高
+
+
+postcss: 平台，提供解析器，ast...（cssnext，cssnano）
+后处理器：运行时之后 fixed－sticky／prefixfree
+
+css超集
+
+
+
+
+
+rework:
+
+
+高性能css动画
+melon.h 黄薇
+
+渲染： 一系列的连续的图片一一定的频率变化
+
+
+dom + css  =  render tree
+
+layout: 遍历render tree （确定元素的位置和大小，读取css属性也会触发，如position，所以要分离读写，先读后写，用requestAnimationFram）
+	texture位图 cpu传到gpu的位图
+	layer 修改一下属性会使浏览器生成单独图层（css属性：3dtransiform，animation transition, canvas video）
+	will－change：transform，opacity；／／为该元素单独生成图层以做优化。
+	优化：用transform替换left这种动画
+
+
+浏览器线程：
+主线程：修改某些css属性－》同步位图到合成器－》
+合成器线程：生成位图／上传位图到gpu
+
+
+
+
+
+
+
+paint：绘制 生成位图bitmap
+
+composit transfer 和 opacity
+
+
+触发的阶段越早，浏览器的代价越高
+
+性能
+硬件加速（gpu or cpu）
+算数逻辑单元越多，并行运算能力更强（平移／旋转／透明度就是指针变换，gpu来完成比cpu更高效数百倍）
+
+
+
+肉眼 30fps:流畅，60＋ 更流畅：16.7ms之内 画好一帧
+
+绘制的时机
+	settimeout 15.6ms
+	requestAnimationFram
+
+渲染一帧的时间
+
+
+
+gif 不使用时要设为none
+
+gpu的限度，避免意外生成layer
+加入一个元素单独生成一个layer，那么z－index比他高的也会生成一个layer
+
+用户输入事件：避免在事件处理函数中修改样式属性
+滚动：本来可以只用合成器进程来做的，但是往往囿于ontouchmove事件，被js的主线程阻塞了。
+chrome：
+ie：touch－action属性，由css指明元素支持那些用户touch操作。
+	
+
+网站 jankfree
+
+
+css魔法 百姓网
+
+css图标
+
+one-div.com
+
+css权威指南
+精通css 高级web标准解决方案
+css secrets － Lea verou
+
+
+多重边框：
+	1.outline：木有圆角 outline－offset
+	2.box－shadow 有圆角
+
+	这两个方案都不会占空间。。。
+
+圆润的标签页
+镜像渐变
+
+移动下的css布局 一号店施丰丰
+
+viewport android 4.3以上， ie9以上
+vw vh，width／height的1%
+
+
+margin－top／padding－top 是相对于父容器的
+
+flex
+主轴／侧轴
+
+中文排版需求
+
+
