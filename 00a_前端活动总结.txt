@@ -13,3 +13,25 @@
 
 解决办法二： 
 不要用left right啦～父容器也不要～ 布局用padding就妥妥的可以识别。。。
+
+2.微信这货。。。貌似在webview内部跳转，每次跳转都不缓存啊，完全主动刷新。。。。重新进去的时候呢又是主动使用缓存。。。
+
+用了修改history的hash和判断hash，再手动滚动对应值，比较粗暴哇。。。
+
+        var hash = window.location.hash.replace(/^#tp_/, '');
+        var targetId = window.location.hash.replace(/^#tp_pinlei_/, '');
+        var numTarget = Number(targetId);
+        if(numTarget > -1){
+            $('html,body').animate({
+                scrollTop:$("*[id="+hash+"]").offset().top
+            }, 800);
+        }else{
+            hash = window.location.hash.replace(/^#tp_pinlei_num/, '');
+
+            setTimeout(function(){
+                //window.scrollTo(0,hash);
+                $('html,body').animate({
+                    scrollTop:hash
+                },500);
+            },1000)
+        }
