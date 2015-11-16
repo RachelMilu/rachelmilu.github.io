@@ -1,0 +1,8 @@
+创建模块目录
+解压后可以看到 index.html frameworks modules components 等几个文件，接下来打开 modules 文件夹，会发现里面包含一个预置的模块：frameworks即主视图模块。
+
+各文件的解释
+index.html 为程序的主文件，是程序的入口文件，一般不做改动，frameworks 为框架核心文件夹，主要负责创建模块依赖环境以及核心功能，一般不需要做改动，modules 为框模块文件夹，接下来开发者写的所有界面和逻辑几乎都放在这里，config 为程序配置文件夹，每创建一个新的模块都要在这里注册。modules 文件夹下的 frameworks 和 components 分别是框架的主视图模块和组件模块，这两个文件夹是不可删除的。frameworks 是整个程序最顶级的视图模块，其他模块视图都属于他的子集，如果要修改框架主视图则在此模块的模版中修改。
+在 modules 文件夹中新建一个命名为 demo 的文件夹，demo 就是一个新的模块目录了。
+
+
