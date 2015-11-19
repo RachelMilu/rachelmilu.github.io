@@ -15,6 +15,9 @@ IOS中全球购的页面还是无法往下拉，半价正常
 除此之外，全球购／半价／买家版app在配链接时需要配上http://api.m.koudai.com/jump/p.do?来调用跳转服务。否则version值丢失，分享功能会错乱（具体表现为点击“分享到微信”，弹出提示框“全球购想要打开口袋购物”，正常应该是直接唤起微信）
 
 
+<meta name="viewport" content="initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">      这个腾讯浏览器X5内核不支持
+
+
 
 
 
