@@ -52,7 +52,7 @@ http://www.cnblogs.com/snandy/archive/2011/05/03/2034229.html
 7，postMessage (HTML5)
 8，后台代理
 ”
- var xmlhttp;
+ 			var xmlhttp;
                     if (window.XMLHttpRequest)
                     {// code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp=new XMLHttpRequest();
