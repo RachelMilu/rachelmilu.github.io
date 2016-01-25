@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+    <title>图片上传</title>
+<style>
+</style>
+</head>
+<body class="container">
+
+<div uuid="inlinePicPicker" class="inline-pic-picker">
+    <div class="ip-uploadImg hidden">
+        <div class="rotate-container">
+            loading。。。
+        </div>
+    </div>
+    <input class="img-upload-input opacity0" type="file" />
+    <div class="img-preview-container-small">
+        <img data-src="" class="small-img" />
+    </div>
+</div>
+<script  src="lib/file-upload.js"></script>
+<script>
+    ImgUpload('.img-upload-input',config, postImgCallback, uploadFail);
+    //在callback里写业务相关
+    function postImgCallback (res) {
+        if (res && res.responseText) {
+            var rs = JSON.parse(res.responseText)
+            //TODO 必须查看图片上传接口的返回值约定并修改成相应的判断条件
+            if (rs && rs.status && rs.status.status_code == 0) {
+                /*图片上传成功*/
+                imgUrl = rs.result
+                var img = new Image();
+                img.src = imgUrl;
+                img.onload=function(){
+                    document.querySelector('.small-img').style.background = "url('"+ imgUrl + '?w=' + (80/window.devicePixelRatio).toFixed(0) +"') center no-repeat";
+                    document.querySelector('.small-img').style.backgroundSize = "cover";
+                };
+                img.onerror=function(){
+                    document.querySelector('.small-img').style.background = "url('"+ imgUrl + '?w=' + (80/window.devicePixelRatio).toFixed(0) +"') center no-repeat";
+                    document.querySelector('.small-img').style.backgroundSize = "cover";
+                    document.querySelector('.small-img').style.border = "1px solid #ddd";
+                }
+
+            }else{
+                errorHandler(xmlhttp)
+            }
+        }else {
+            errorHandler(xmlhttp)
+        }
+
+    }
+    function uploadFail (xmlhttp) {
+        console.log('...xmlhttp',xmlhttp)
+    }
+
+    function config (pic, options, postConfig) {
+        console.log(options, postConfig)
+        options.pic = pic;
+        postConfig.url = "dummy/data.json"
+        console.log(options, postConfig)
+    }
+
+
+</script>
+</body>
