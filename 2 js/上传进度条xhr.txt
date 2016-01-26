@@ -1,0 +1,20 @@
+https://xhr.spec.whatwg.org/#interface-progressevent
+
+<!DOCTYPE html>
+<title>Waiting for Magical Unicorns</title>
+<progress id=p></progress>
+<script>
+  var progressBar = document.getElementById("p"),
+      client = new XMLHttpRequest()
+  client.open("GET", "magical-unicorns")
+  client.onprogress = function(pe) {
+    if(pe.lengthComputable) {
+      progressBar.max = pe.total
+      progressBar.value = pe.loaded
+    }
+  }
+  client.onloadend = function(pe) {
+    progressBar.value = pe.loaded
+  }
+  client.send()
+</script>
