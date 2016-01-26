@@ -1,0 +1,19 @@
+      touch事件检测
+      _checkEventCompatibility: function () {
+        var isTouch = 'ontouchstart' in document.documentElement;
+        this.start = isTouch ? 'touchstart' : 'mousedown';
+        this.move = isTouch ? 'touchmove' : 'mousemove';
+        this.end = isTouch ? 'touchend' : 'mouseup';
+        this.startFn;
+        this.moveFn;
+        this.endFn;
+      },
+      
+      
+      requestAnimationFrame检测
+      var rAF = window.requestAnimationFrame    ||
+2     window.webkitRequestAnimationFrame    ||
+3     window.mozRequestAnimationFrame        ||
+4     window.oRequestAnimationFrame        ||
+5     window.msRequestAnimationFrame        ||
+6     function (callback) { window.setTimeout(callback, 1000 / 60); };
