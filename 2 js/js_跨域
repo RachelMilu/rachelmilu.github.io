@@ -72,3 +72,20 @@ http://www.cnblogs.com/snandy/archive/2011/05/03/2034229.html
                     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                     xmlhttp.send("a=1");
                     
+                    
+                    
+zepto
+$.ajax({
+            type: 'get',
+            dataType: 'jsonp',
+            url:'',
+            success: function (result) {
+              
+            },
+            error: function () {
+                console.log('请求失败')
+            },
+            complete: function () {
+            
+            }
+        })
