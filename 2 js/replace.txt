@@ -1,3 +1,17 @@
+function randomNumber(min,max){
+    var i = max - min;
+    return Math.round(i*Math.random() + min);
+}
+
+function test(min,max){
+    var a= 0;
+    for(var i =0;i<20;i++){
+         a = randomNumber(min,max);
+         console.log(a);
+
+    }
+}
+
 function translate(str){
     return str.replace(/({.+?})/ig,function(match,pos,originTxt){
         console.log("1:",match);
