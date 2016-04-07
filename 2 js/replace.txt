@@ -1,3 +1,15 @@
+function translate(str){
+    return str.replace(/({.+?})/ig,function(match,pos,originTxt){
+        console.log("1:",match);
+        console.log("2:",pos);
+        console.log("3:",originTxt);
+        return "o";
+    });
+}
+
+
+
+
 var substitute = function(str, sub) {
     return str.replace(/\{(.+?)\}/g,function($0, $1) {
         return $1 in sub ? sub[$1] : $0;
