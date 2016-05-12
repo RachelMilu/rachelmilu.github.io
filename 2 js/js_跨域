@@ -17,6 +17,39 @@ Access-Control-Allow-Origin: http://rachelmilu.github.io
 Access-Control-Allow-Origin: *
 
 栗子：
+
+$.ajax({
+                type: 'post',
+                dataType: 'json',
+                url:url,
+                //data:encodeURIComponent(JSON.stringify(data)),
+                data:JSON.stringify(data),
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (resp) {
+                    debugger;
+                    var statusCode;
+                    if(resp && resp.status){
+                        statusCode = resp.status.code;
+                        if(statusCode === 0){
+                            self.successCallback(resp);
+                        }else if(statusCode === 25000){
+                            //可以暴露给用户看的错误信息
+                            Util.errorCallback(resp.status.message);
+                        }else{
+                            Util.errorCallback(Config.i18n.serverErrorMessage);
+                        }
+                    }else{
+                        Util.errorCallback(Config.i18n.serverErrorMessage);
+                    }
+                },
+                error: function (result) {
+                    console.log('err !!!!!!!!',result);
+                    Util.errorCallback(Config.i18n.serverErrorMessage);
+                }
+            });
+
 	var userInfo={ userId:"111111"};  
     
 	   $.ajax({   
