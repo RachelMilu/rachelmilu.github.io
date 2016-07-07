@@ -3,3 +3,9 @@
 冒泡与阻止冒泡
 
 http://www.tuicool.com/articles/uIfeM3V
+
+
+var evt = document.createEvent('HTMLEvents');
+            evt.initEvent('shareSuccess', true, true);
+            evt.result = 'llll';
+            this._dom.dispatchEvent(evt);
