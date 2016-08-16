@@ -1,0 +1,13 @@
+
+var ele = 需要隐藏的元素;
+var outclicked = function(e){
+    
+    if (e.type == "focusin" || $(e.target).closest(ele).length) return;
+    //hide(ele)
+}
+$(document).
+    on('mousedown.dropdownselector', outclicked)
+    .on('focusin.dropdownselector', outclicked);
+
+// 如果组件需要销毁：
+// $(document).off('.dropdownselector');
