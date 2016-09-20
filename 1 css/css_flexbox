@@ -187,6 +187,18 @@ box-flex-group       以组为单位的流体系数
 box-lines
 box-ordinal-group    以组为单位的子元素排列方向
 
+可伸缩框属性（Flexible Box）
+属性	描述	CSS
+box-align	规定如何对齐框的子元素。	3
+box-direction	规定框的子元素的显示方向。	3
+box-flex	规定框的子元素是否可伸缩。	3
+box-flex-group	将可伸缩元素分配到柔性分组。	3
+box-lines	规定当超出父元素框的空间时，是否换行显示。	3
+box-ordinal-group	规定框的子元素的显示次序。	3
+box-orient	规定框的子元素是否应水平或垂直排列。	3
+box-pack	规定水平框中的水平位置或者垂直框中的垂直位置。	3
+
+
 
 
 
