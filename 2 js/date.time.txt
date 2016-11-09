@@ -1,0 +1,23 @@
+return {
+        dateFormate: function(ms){
+            var ten = function(i){
+                return (i > 9)?i:("0"+i)
+            }
+            var day = Date.now(ms);
+
+            if(day){
+                var t = new Date(),
+                    y = t.getFullYear(),
+                    M = t.getMonth() + 1,
+                    d = t.getDate(),
+                    h = t.getHours(),
+                    m = t.getMinutes(),
+                    s = t.getSeconds();
+                return y + "-" + ten(M) + "-" + ten(d) + " " +  ten(h) + ":" + ten(m) + ":" + ten(s);
+
+            }
+
+            return false;
+
+        }
+    }
