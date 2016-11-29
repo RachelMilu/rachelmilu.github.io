@@ -1,0 +1,9 @@
+function addCSS(cssText) {
+        var style = document.createElement('style'),
+            head = document.head || document.getElementsByTagName('head')[0];
+
+        style.type = 'text/css';
+        var textNode = document.createTextNode(cssText);
+        style.appendChild(textNode);
+        head.appendChild(style);
+    }
