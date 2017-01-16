@@ -6,7 +6,7 @@ return {
             var day = Date.now(ms);
 
             if(day){
-                var t = new Date(),
+                var t = new Date(day),
                     y = t.getFullYear(),
                     M = t.getMonth() + 1,
                     d = t.getDate(),
