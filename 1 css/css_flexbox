@@ -1,4 +1,4 @@
-​flexbox要记的东西真多，今天就来啃一啃这块硬骨头。 
+一行三列 用flex：1 0 26%； flex： 0 0 31%；
 学习教程就是大漠的帖子：http://www.w3cplus.com/css3/a-guide-to-flexbox.html
 最常用的垂直左右居中，for父元素
   display: flex;
